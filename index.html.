@@ -4,550 +4,475 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090914">
+<meta name="theme-color" content="#090816">
 <title>CLIPFORGE — Creator Studio</title>
 <style>
 :root{
-  --bg:#090914;
-  --panel:#111120;
-  --panel2:#17172a;
-  --border:#292943;
-  --purple:#9165ff;
-  --pink:#d45cff;
-  --text:#f6f4ff;
-  --muted:#9291ad;
-  --green:#55e6a5;
+  --bg:#090816;
+  --panel:#121126;
+  --panel2:#191733;
+  --line:#292548;
+  --purple:#9b75ff;
+  --pink:#e879f9;
+  --text:#f6f3ff;
+  --muted:#a5a0bf;
+  --green:#67e8b1;
 }
 *{box-sizing:border-box}
 body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:Inter,system-ui,-apple-system,sans-serif;
-  min-height:100vh;
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Inter,system-ui,Arial,sans-serif;
 }
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 .app{display:flex;min-height:100vh}
 .sidebar{
-  width:245px;background:#0d0d19;border-right:1px solid var(--border);
-  padding:25px 17px;display:flex;flex-direction:column;flex-shrink:0;
+ width:245px;background:#0d0b1c;border-right:1px solid var(--line);
+ padding:25px 17px;position:fixed;inset:0 auto 0 0;
+ display:flex;flex-direction:column;z-index:5;
 }
-.logo{font-size:22px;font-weight:900;letter-spacing:1px;margin-bottom:8px}
+.logo{font-size:24px;font-weight:900;letter-spacing:-1px;margin-bottom:5px}
 .logo span{color:var(--purple)}
-.tagline{font-size:11px;color:var(--muted);margin-bottom:37px}
-.nav-label{font-size:10px;color:#77758e;letter-spacing:1.5px;margin:20px 10px 10px}
+.tagline{font-size:11px;color:var(--muted);margin-bottom:38px}
+.nav-label{font-size:10px;color:#77718f;font-weight:800;letter-spacing:1.5px;margin:15px 10px}
 .nav{
-  padding:12px 13px;border-radius:10px;color:#aaa8c1;
-  display:flex;gap:12px;align-items:center;font-size:13px;
-  cursor:pointer;margin-bottom:5px;border:1px solid transparent;
+ width:100%;border:0;background:transparent;color:var(--muted);
+ padding:12px;border-radius:11px;text-align:left;margin:3px 0;
+ display:flex;gap:12px;align-items:center;font-size:13px;
 }
-.nav:hover,.nav.active{
-  background:#201a38;color:white;border-color:#423265;
+.nav.active,.nav:hover{background:#211b3b;color:white}
+.nav.active{box-shadow:inset 3px 0 var(--purple)}
+.sidebar-bottom{margin-top:auto;background:var(--panel);border:1px solid var(--line);padding:14px;border-radius:14px}
+.sidebar-bottom strong{font-size:12px}
+.sidebar-bottom p{font-size:11px;color:var(--muted);line-height:1.5}
+.main{margin-left:245px;width:calc(100% - 245px);padding:30px 38px 60px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;gap:15px}
+.eyebrow{font-size:11px;color:var(--purple);font-weight:800;letter-spacing:1.5px}
+h1{font-size:30px;letter-spacing:-1.3px;margin:7px 0}
+.subtitle{color:var(--muted);font-size:13px}
+.avatar{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#9b75ff,#e879f9);display:grid;place-items:center;font-weight:900}
+.page{display:none}.page.active{display:block}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:24px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:19px}
+.stat-title{font-size:11px;color:var(--muted)}
+.stat-value{font-size:26px;font-weight:850;margin:9px 0 4px}
+.stat-note{font-size:10px;color:var(--green)}
+.workspace{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);gap:18px}
+.section-title{font-size:16px;font-weight:800;margin:0 0 5px}
+.section-desc{font-size:11px;color:var(--muted);margin:0 0 20px}
+.field{margin-bottom:16px}
+label{display:block;font-size:11px;font-weight:700;color:#d4cfee;margin-bottom:8px}
+input,textarea,select{
+ width:100%;background:#0d0b1c;border:1px solid var(--line);
+ color:white;border-radius:10px;padding:12px;outline:none;
 }
-.nav.active{color:#c7a9ff}
-.sidebar-bottom{margin-top:auto}
-.plan{
-  background:linear-gradient(145deg,#21183e,#161326);
-  border:1px solid #47346d;border-radius:14px;padding:15px;
-}
-.plan strong{font-size:13px}
-.plan p{font-size:11px;color:#aaa4c5;line-height:1.5}
-.main{flex:1;min-width:0;padding:29px 35px 60px}
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:35px}
-.breadcrumb{font-size:12px;color:var(--muted)}
-.profile{display:flex;align-items:center;gap:10px;font-size:12px}
-.avatar{
- width:34px;height:34px;border-radius:11px;
- background:linear-gradient(135deg,var(--purple),var(--pink));
- display:grid;place-items:center;font-weight:900;
-}
-h1{font-size:29px;margin:0 0 9px;letter-spacing:-1px}
-.subtitle{color:var(--muted);font-size:13px;margin:0 0 27px}
-.hero{
- background:linear-gradient(115deg,#21163e,#17132e 60%,#27133b);
- border:1px solid #443064;border-radius:19px;padding:25px;
- display:flex;align-items:center;justify-content:space-between;
- gap:20px;margin-bottom:24px;position:relative;overflow:hidden;
-}
-.hero:after{
- content:"";position:absolute;width:230px;height:230px;border-radius:50%;
- background:#a45aff20;filter:blur(35px);right:5%;top:-100px;
-}
-.hero-content{position:relative;z-index:1}
-.hero-label{font-size:10px;color:#c9aaff;letter-spacing:1.7px;font-weight:800}
-.hero h2{font-size:23px;margin:11px 0 8px}
-.hero p{font-size:12px;color:#c0b6d8;margin:0;line-height:1.7}
-.hero-mark{font-size:64px;position:relative;z-index:1}
-.stats{
- display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:25px;
-}
-.stat{
- padding:17px;background:var(--panel);border:1px solid var(--border);
- border-radius:13px;
-}
-.stat small{color:var(--muted);font-size:11px}
-.stat strong{display:block;font-size:22px;margin-top:8px}
-.section-title{font-size:16px;margin:0 0 15px}
-.workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.85fr);gap:17px}
-.card{
- background:var(--panel);border:1px solid var(--border);
- border-radius:15px;padding:20px;min-width:0;
-}
-.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:19px}
-.card-head h3{font-size:15px;margin:0}
-.pill{font-size:10px;color:#c9aaff;background:#2a1d48;padding:6px 9px;border-radius:20px}
-.field{margin-bottom:15px}
-label{display:block;color:#c4c0d8;font-size:11px;margin-bottom:8px}
-input,select,textarea{
- width:100%;background:#0b0b17;border:1px solid var(--border);
- border-radius:9px;padding:12px;color:white;outline:none;font-size:12px;
-}
-input:focus,select:focus,textarea:focus{border-color:var(--purple)}
-textarea{resize:vertical;min-height:78px}
-select option{background:#111120}
-.row-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+input:focus,textarea:focus,select:focus{border-color:var(--purple)}
+textarea{resize:vertical;min-height:85px}
+select option{background:#121126}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .primary{
- width:100%;padding:13px;border:0;border-radius:10px;
- background:linear-gradient(100deg,#8356f6,#bd55ed);
- color:white;font-size:12px;font-weight:800;
- box-shadow:0 5px 20px #9855ee25;
+ border:0;border-radius:11px;padding:13px 17px;
+ color:white;font-weight:800;background:linear-gradient(110deg,#8158ee,#bd69e8);
+ width:100%;transition:.2s;
 }
-.primary:hover{filter:brightness(1.12)}
+.primary:hover{filter:brightness(1.15);transform:translateY(-1px)}
 .secondary{
- background:#211a36;border:1px solid #48376b;color:#d7c4ff;
- border-radius:8px;padding:9px 12px;font-size:11px;
+ border:1px solid var(--line);border-radius:9px;padding:8px 11px;
+ color:#ddd5ff;background:#211b3b;font-size:11px;font-weight:700;
 }
-.output{display:flex;flex-direction:column;gap:11px}
-.output-block{
- background:#0b0b17;border:1px solid var(--border);
- border-radius:10px;padding:13px;
-}
-.output-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.output-top strong{font-size:11px;color:#c6a5ff}
-.copy{background:#24203a;color:#d9caff;border:0;padding:6px 9px;border-radius:6px;font-size:10px}
-.output-text{font-size:12px;line-height:1.7;color:#d6d3e6;white-space:pre-wrap;overflow-wrap:anywhere}
-.placeholder{
- min-height:310px;display:grid;place-items:center;text-align:center;
- color:var(--muted);font-size:12px;line-height:1.8;
-}
-.placeholder span{font-size:35px;display:block;margin-bottom:10px}
-.history-item{
- background:#0c0c18;border:1px solid var(--border);border-radius:9px;
- padding:13px;margin-bottom:9px;
-}
+.result-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.result-list{display:grid;gap:11px}
+.result-item{background:#0d0b1c;border:1px solid var(--line);border-radius:12px;padding:14px}
+.result-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.result-top strong{font-size:12px}
+.result-text{font-size:12px;line-height:1.7;color:#d7d1ed;white-space:pre-wrap;overflow-wrap:anywhere}
+.empty{padding:45px 15px;text-align:center;color:var(--muted);font-size:12px;line-height:1.8}
+.empty-icon{font-size:32px;margin-bottom:12px}
+.history-list{display:grid;gap:10px}
+.history-item{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .history-item strong{font-size:12px}
-.history-item p{font-size:10px;color:var(--muted)}
-.history-item button{margin-right:5px}
-.page{display:none}
-.page.active{display:block}
-.tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
-.tool{
- background:var(--panel);border:1px solid var(--border);
- border-radius:13px;padding:17px;cursor:pointer;
-}
-.tool:hover{border-color:var(--purple);transform:translateY(-2px)}
-.tool .emoji{font-size:25px}
-.tool h3{font-size:13px;margin:13px 0 6px}
-.tool p{font-size:11px;color:var(--muted);line-height:1.6}
-.empty{text-align:center;padding:45px;color:var(--muted);font-size:12px}
+.history-item small{display:block;color:var(--muted);font-size:10px;margin-top:5px}
+.badge{background:#292044;color:#cbb7ff;padding:5px 8px;border-radius:7px;font-size:10px}
+.notice{color:var(--muted);font-size:10px;line-height:1.6;margin-top:15px}
 .toast{
- position:fixed;bottom:22px;right:22px;background:#24203a;
- border:1px solid #59427f;border-radius:10px;padding:13px 18px;
- font-size:12px;display:none;z-index:20;
+ position:fixed;bottom:22px;right:22px;background:#211b3b;
+ border:1px solid var(--purple);padding:13px 18px;border-radius:11px;
+ font-size:12px;opacity:0;transform:translateY(10px);transition:.25s;z-index:20;
 }
+.toast.show{opacity:1;transform:translateY(0)}
 .mobile-menu{display:none}
-.footer{text-align:center;color:#77758d;font-size:10px;margin-top:35px}
-@media(max-width:900px){
- .sidebar{width:205px}
- .main{padding:25px 20px}
+footer{color:#77718f;font-size:10px;margin-top:35px;text-align:center}
+@media(max-width:850px){
+ .sidebar{width:205px}.main{margin-left:205px;width:calc(100% - 205px);padding:25px 20px}
  .workspace{grid-template-columns:1fr}
- .tools-grid{grid-template-columns:repeat(2,1fr)}
 }
-@media(max-width:650px){
- .sidebar{display:none}
- .main{padding:18px 14px 40px}
- .topbar{margin-bottom:25px}
+@media(max-width:620px){
+ .sidebar{position:relative;width:100%;height:auto;padding:14px;display:block;border-right:0;border-bottom:1px solid var(--line)}
+ .logo{font-size:21px}.tagline{margin-bottom:12px}
+ .sidebar .nav-label,.sidebar-bottom{display:none}
+ .navs{display:flex;gap:5px;overflow-x:auto}
+ .nav{white-space:nowrap;width:auto;margin:0;padding:9px;font-size:11px}
+ .main{margin:0;width:100%;padding:22px 14px}
+ .stats{gap:8px}.card{padding:13px}
+ .stat-value{font-size:20px}
  h1{font-size:25px}
- .hero{padding:19px}
- .hero h2{font-size:19px}
- .hero-mark{font-size:42px}
- .stats{gap:7px}
- .stat{padding:12px}
- .stat strong{font-size:18px}
- .stat small{font-size:9px}
- .tools-grid{grid-template-columns:1fr 1fr}
- .row-fields{grid-template-columns:1fr}
- .card{padding:15px}
- .mobile-menu{display:flex;gap:7px;overflow:auto;margin-bottom:22px}
- .mobile-menu button{
-  white-space:nowrap;background:#171426;border:1px solid var(--border);
-  color:#aaa4c5;padding:9px 12px;border-radius:8px;font-size:10px;
- }
- .mobile-menu button.active{background:#30204d;color:white;border-color:var(--purple)}
+ .topbar{margin-bottom:23px}
 }
 </style>
 </head>
 <body>
 <div class="app">
-
 <aside class="sidebar">
- <div class="logo">CLIP<span>FORGE</span></div>
- <div class="tagline">YOUR CONTENT. YOUR GROWTH.</div>
-
- <div class="nav-label">WORKSPACE</div>
- <div class="nav active" data-page="dashboard">◈ &nbsp; Dashboard</div>
- <div class="nav" data-page="studio">✦ &nbsp; AI Content Studio</div>
- <div class="nav" data-page="tools">▦ &nbsp; Creator Tools</div>
-
- <div class="nav-label">LIBRARY</div>
- <div class="nav" data-page="history">◷ &nbsp; My Creations</div>
-
- <div class="sidebar-bottom">
-  <div class="plan">
-   <strong>✦ CREATOR PLAN</strong>
-   <p>Your creative journey starts here. Create without limits imposed by subscriptions.</p>
-   <span class="pill">FREE ACCESS</span>
+  <div class="logo">CLIP<span>FORGE</span></div>
+  <div class="tagline">YOUR CONTENT. YOUR GROWTH.</div>
+  <div class="nav-label">WORKSPACE</div>
+  <div class="navs">
+    <button class="nav active" data-page="studio">✦ Creator Studio</button>
+    <button class="nav" data-page="history">◷ History</button>
   </div>
- </div>
+  <div class="nav-label">INFORMATION</div>
+  <div class="navs">
+    <button class="nav" data-page="about">◈ About ClipForge</button>
+  </div>
+  <div class="sidebar-bottom">
+    <strong>⚡ CLIPFORGE V1</strong>
+    <p>Your content creation workspace. Create ideas, scripts and captions in seconds.</p>
+  </div>
 </aside>
 
 <main class="main">
- <div class="topbar">
-  <div class="breadcrumb">CLIPFORGE / <span id="crumb">DASHBOARD</span></div>
-  <div class="profile"><div class="avatar">C</div> Creator Workspace</div>
- </div>
-
- <div class="mobile-menu">
-  <button class="active" data-page="dashboard">Dashboard</button>
-  <button data-page="studio">Studio</button>
-  <button data-page="tools">Tools</button>
-  <button data-page="history">History</button>
- </div>
-
- <section class="page active" id="dashboard">
-  <h1>Welcome to your studio.</h1>
-  <p class="subtitle">Everything you need to create better content, in one place.</p>
-
-  <div class="hero">
-   <div class="hero-content">
-    <div class="hero-label">✦ YOUR CREATIVE WORKSPACE</div>
-    <h2>Turn ideas into content.</h2>
-    <p>Create scripts, hooks and content ideas.<br>Make your next video happen.</p>
-    <br>
-    <button class="secondary" onclick="navigate('studio')">Open Content Studio →</button>
-   </div>
-   <div class="hero-mark">✧</div>
+  <div class="topbar">
+    <div>
+      <div class="eyebrow">CREATOR WORKSPACE / 001</div>
+      <h1 id="pageTitle">Creator Studio</h1>
+      <div class="subtitle" id="pageSubtitle">Turn your ideas into content that gets noticed.</div>
+    </div>
+    <div class="avatar">CF</div>
   </div>
 
-  <div class="stats">
-   <div class="stat"><small>Total creations</small><strong id="statTotal">0</strong></div>
-   <div class="stat"><small>Saved scripts</small><strong id="statScripts">0</strong></div>
-   <div class="stat"><small>Available tools</small><strong>8</strong></div>
-  </div>
-
-  <h3 class="section-title">Quick actions</h3>
-  <div class="tools-grid">
-   <div class="tool" onclick="navigate('studio')"><div class="emoji">🎬</div><h3>Video Script</h3><p>Build your next video.</p></div>
-   <div class="tool" onclick="quickIdea()"><div class="emoji">💡</div><h3>Video Ideas</h3><p>Find your next topic.</p></div>
-   <div class="tool" onclick="navigate('studio')"><div class="emoji">⚡</div><h3>Viral Hooks</h3><p>Catch attention instantly.</p></div>
-   <div class="tool" onclick="navigate('tools')"><div class="emoji">✍️</div><h3>Creator Tools</h3><p>Explore your toolkit.</p></div>
-   <div class="tool" onclick="navigate('history')"><div class="emoji">📚</div><h3>My Creations</h3><p>Find your saved work.</p></div>
-   <div class="tool" onclick="navigate('studio')"><div class="emoji">#️⃣</div><h3>Hashtags</h3><p>Prepare your description.</p></div>
-  </div>
- </section>
-
- <section class="page" id="studio">
-  <h1>AI Content Studio.</h1>
-  <p class="subtitle">Your next video starts with an idea. Let's build it.</p>
-
-  <div class="workspace">
-   <div class="card">
-    <div class="card-head"><h3>✦ Create your content</h3><span class="pill">CONTENT ENGINE</span></div>
-
-    <div class="field">
-     <label>What is your video about?</label>
-     <textarea id="topic" placeholder="Example: 5 funny moments in a Roblox game..."></textarea>
+  <section class="page active" id="studio">
+    <div class="stats">
+      <div class="card">
+        <div class="stat-title">CONTENT PACKS CREATED</div>
+        <div class="stat-value" id="statCreated">0</div>
+        <div class="stat-note">Your creative activity</div>
+      </div>
+      <div class="card">
+        <div class="stat-title">SAVED PACKS</div>
+        <div class="stat-value" id="statSaved">0</div>
+        <div class="stat-note">Stored on this device</div>
+      </div>
+      <div class="card">
+        <div class="stat-title">PLATFORMS</div>
+        <div class="stat-value">03</div>
+        <div class="stat-note">TikTok · Reels · Shorts</div>
+      </div>
     </div>
 
-    <div class="row-fields">
-     <div class="field">
-      <label>Platform</label>
-      <select id="platform">
-       <option>TikTok</option><option>YouTube Shorts</option><option>Instagram Reels</option>
-      </select>
-     </div>
-     <div class="field">
-      <label>Video duration</label>
-      <select id="duration">
-       <option value="30">30 seconds</option>
-       <option value="45" selected>45 seconds</option>
-       <option value="60">60 seconds</option>
-       <option value="90">90 seconds</option>
-      </select>
-     </div>
+    <div class="workspace">
+      <div class="card">
+        <h2 class="section-title">Create your content pack</h2>
+        <p class="section-desc">Give us your idea. Build your next video concept.</p>
+        <div class="field">
+          <label for="topic">VIDEO TOPIC / IDEA</label>
+          <textarea id="topic" placeholder="Example: A funny Roblox game where everything goes wrong..."></textarea>
+        </div>
+        <div class="two">
+          <div class="field">
+            <label for="platform">PLATFORM</label>
+            <select id="platform">
+              <option value="TikTok">TikTok</option>
+              <option value="Instagram Reels">Instagram Reels</option>
+              <option value="YouTube Shorts">YouTube Shorts</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="duration">VIDEO DURATION</label>
+            <select id="duration">
+              <option value="15 seconds">15 seconds</option>
+              <option value="30 seconds" selected>30 seconds</option>
+              <option value="45 seconds">45 seconds</option>
+              <option value="60 seconds">60 seconds</option>
+              <option value="90 seconds">90 seconds</option>
+            </select>
+          </div>
+        </div>
+        <div class="two">
+          <div class="field">
+            <label for="tone">CONTENT TONE</label>
+            <select id="tone">
+              <option value="Funny">Funny</option>
+              <option value="Dramatic">Dramatic</option>
+              <option value="Energetic">Energetic</option>
+              <option value="Educational">Educational</option>
+              <option value="Storytelling">Storytelling</option>
+              <option value="Professional">Professional</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="audience">TARGET AUDIENCE</label>
+            <select id="audience">
+              <option>General audience</option>
+              <option>Gaming community</option>
+              <option>Young creators</option>
+              <option>Entertainment fans</option>
+              <option>Entrepreneurs</option>
+            </select>
+          </div>
+        </div>
+        <button class="primary" id="generate">✦ Generate content pack</button>
+        <p class="notice">This version uses built-in creative templates. No external AI service is connected yet.</p>
+      </div>
+
+      <div class="card">
+        <div class="result-head">
+          <div>
+            <h2 class="section-title">Your content pack</h2>
+            <p class="section-desc" style="margin:5px 0 0">Your generated results appear here.</p>
+          </div>
+          <span class="badge">OUTPUT</span>
+        </div>
+        <div id="results" class="empty">
+          <div class="empty-icon">✧</div>
+          <strong>Your next video starts here.</strong><br>
+          Enter a topic and generate your first content pack.
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="row-fields">
-     <div class="field">
-      <label>Content style</label>
-      <select id="tone">
-       <option value="funny">Funny / Humorous</option>
-       <option value="story">Storytelling</option>
-       <option value="educational">Educational</option>
-       <option value="serious">Professional</option>
-       <option value="mysterious">Suspenseful</option>
-       <option value="energetic">Energetic</option>
-      </select>
-     </div>
-     <div class="field">
-      <label>Target audience</label>
-      <select id="audience">
-       <option>General audience</option>
-       <option>Gaming community</option>
-       <option>Entrepreneurs</option>
-       <option>Students</option>
-       <option>Technology fans</option>
-       <option>Sports fans</option>
-      </select>
-     </div>
+  <section class="page" id="history">
+    <div class="card">
+      <div class="result-head">
+        <div>
+          <h2 class="section-title">Your history</h2>
+          <p class="section-desc" style="margin:5px 0 0">Your previously generated content packs.</p>
+        </div>
+        <button class="secondary" id="clearHistory">Clear history</button>
+      </div>
+      <div id="historyList" class="history-list"></div>
     </div>
+  </section>
 
-    <div class="field">
-     <label>Extra instructions (optional)</label>
-     <input id="extra" placeholder="Example: Add a surprising ending...">
+  <section class="page" id="about">
+    <div class="card">
+      <div class="eyebrow">THE CREATOR TOOLKIT</div>
+      <h2 style="font-size:25px;margin:12px 0">Your Content. Your Growth.</h2>
+      <p class="subtitle" style="line-height:1.9">CLIPFORGE is a content creation workspace designed for short-form creators. Organize your ideas, create video concepts, and prepare your next post for TikTok, Instagram Reels and YouTube Shorts.</p>
+      <div class="result-list" style="margin-top:25px">
+        <div class="result-item"><strong>✦ Content generation</strong><p class="subtitle">Hooks, scripts, titles, descriptions and hashtags.</p></div>
+        <div class="result-item"><strong>◷ Local history</strong><p class="subtitle">Keep track of the packs you create on this device.</p></div>
+        <div class="result-item"><strong>⚡ Multi-platform</strong><p class="subtitle">Prepare content for three major short-form platforms.</p></div>
+      </div>
+      <p class="notice">CLIPFORGE V1 · Template-based generator · Your history is stored locally in your browser.</p>
     </div>
-
-    <button class="primary" id="generateBtn" onclick="generate()">✦ Generate my content pack</button>
-    <p style="color:var(--muted);font-size:10px;line-height:1.6">
-     This first version uses a built-in content engine. No paid API or external AI connection is active.
-    </p>
-   </div>
-
-   <div class="card">
-    <div class="card-head"><h3>Your content pack</h3><span class="pill">OUTPUT</span></div>
-    <div id="results" class="placeholder">
-     <div><span>✧</span>Your creations will appear here.<br>Enter a topic to get started.</div>
-    </div>
-   </div>
-  </div>
- </section>
-
- <section class="page" id="tools">
-  <h1>Creator Tools.</h1>
-  <p class="subtitle">Your creative toolkit, ready to use.</p>
-  <div class="tools-grid">
-   <div class="tool" onclick="navigate('studio')"><div class="emoji">🎬</div><h3>Script Generator</h3><p>Create structured video scripts.</p></div>
-   <div class="tool" onclick="navigate('studio')"><div class="emoji">⚡</div><h3>Hook Generator</h3><p>Write attention-grabbing openings.</p></div>
-   <div class="tool" onclick="navigate('studio')"><div class="emoji">📝</div><h3>Title Generator</h3><p>Find interesting video titles.</p></div>
-   <div class="tool" onclick="navigate('studio')"><div class="emoji">#️⃣</div><h3>Hashtag Generator</h3><p>Find relevant content hashtags.</p></div>
-   <div class="tool" onclick="navigate('studio')"><div class="emoji">📄</div><h3>Description Generator</h3><p>Prepare your video description.</p></div>
-   <div class="tool" onclick="quickIdea()"><div class="emoji">💡</div><h3>Idea Generator</h3><p>Discover your next video concept.</p></div>
-  </div>
- </section>
-
- <section class="page" id="history">
-  <h1>My Creations.</h1>
-  <p class="subtitle">Your previous content packs, saved on this device.</p>
-  <div class="card">
-   <div class="card-head"><h3>📚 Creation history</h3><button class="secondary" onclick="clearHistory()">Clear history</button></div>
-   <div id="historyList"></div>
-  </div>
- </section>
-
- <div class="footer">CLIPFORGE © 2026 — CREATE FASTER. GROW SMARTER.</div>
+  </section>
+  <footer>CLIPFORGE © 2026 · YOUR CONTENT. YOUR GROWTH.</footer>
 </main>
 </div>
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast">Copied!</div>
 
 <script>
 const $ = id => document.getElementById(id);
-let historyData = JSON.parse(localStorage.getItem("clipforge_history") || "[]");
-let currentPack = null;
+let historyData = [];
+try {
+  historyData = JSON.parse(localStorage.getItem("clipforge_history") || "[]");
+  if (!Array.isArray(historyData)) historyData = [];
+} catch(e) { historyData = []; }
 
-function navigate(page){
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- $(page).classList.add("active");
- document.querySelectorAll("[data-page]").forEach(n=>{
-  n.classList.toggle("active",n.dataset.page===page);
- });
- $("crumb").textContent=page.toUpperCase();
- updateStats();
-}
-document.querySelectorAll("[data-page]").forEach(n=>{
- n.addEventListener("click",()=>navigate(n.dataset.page));
-});
+let totalCreated = Number(localStorage.getItem("clipforge_created") || 0);
 
-function toast(msg){
- const t=$("toast");t.textContent=msg;t.style.display="block";
- clearTimeout(window.toastTimer);
- window.toastTimer=setTimeout(()=>t.style.display="none",2200);
-}
-
-function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
-
-const styles={
- funny:{
-  open:["Attends... tu ne vas jamais croire ce qui s'est passé !","Je pensais que ça allait être facile... grosse erreur.","POV : tu voulais juste passer une journée tranquille."],
-  close:["Dis-moi que je ne suis pas le seul à qui ça arrive !","La suite est encore pire...","Tu aurais fait quoi à ma place ?"]
- },
- story:{
-  open:["Tout a commencé par une décision complètement inattendue.","Je ne pensais pas que cette journée allait changer autant de choses.","Au début, tout semblait parfaitement normal."],
-  close:["Et c'est là que tout a changé.","Mais l'histoire ne s'arrête pas là.","Tu veux connaître la suite ?"]
- },
- educational:{
-  open:["Voici quelque chose que beaucoup de personnes ignorent.","En moins d'une minute, tu vas comprendre ceci.","Voici trois choses à connaître absolument."],
-  close:["Enregistre cette vidéo pour t'en souvenir.","Maintenant, tu connais quelque chose de nouveau.","Partage cette astuce avec quelqu'un."]
- },
- serious:{
-  open:["Aujourd'hui, on va parler d'un sujet important.","Voici ce que tu dois vraiment comprendre.","Prenons un instant pour analyser cette situation."],
-  close:["La régularité fait toute la différence.","À toi de mettre ces conseils en pratique.","C'est le point essentiel à retenir."]
- },
- mysterious:{
-  open:["Personne ne s'attendait à ce qui allait suivre.","Un détail étrange a tout changé.","Au début, personne n'avait remarqué ce détail."],
-  close:["Mais un dernier détail reste inexpliqué.","Et c'est ce qui rend cette histoire incroyable.","La prochaine fois, regarde bien les détails."]
- },
- energetic:{
-  open:["On passe directement à l'action !","Prépare-toi, ça va aller très vite !","Aujourd'hui, on teste quelque chose d'incroyable !"],
-  close:["C'est parti pour la prochaine vidéo !","Maintenant, à toi de jouer !","On se retrouve pour le prochain défi !"]
- }
-};
-
-function generate(){
- const topic=$("topic").value.trim();
- if(topic.length<3){toast("Entre un sujet un peu plus précis !");return}
- const tone=$("tone").value;
- const style=styles[tone];
- const platform=$("platform").value;
- const duration=Number($("duration").value);
- const extra=$("extra").value.trim();
- const audience=$("audience").value;
-
- const hooks=[
-  "Tu fais probablement cette erreur sans le savoir...",
-  "Voici pourquoi personne ne parle de ce sujet...",
-  "J'ai testé quelque chose et voici le résultat...",
-  "3 choses que tu dois absolument découvrir...",
-  "Attends la fin, car le résultat est surprenant..."
- ];
- const titles=[
-  "Le guide que tu aurais aimé connaître plus tôt",
-  "Tout comprendre en quelques secondes",
-  "Ce détail change absolument tout",
-  "Le test que personne n'avait demandé",
-  "Une découverte à ne pas manquer"
- ];
-
- const hook=pick(style.open);
- const script=
- `[INTRO — 0 à ${Math.round(duration*.15)} secondes]\n${hook}\n\n`+
- `[SUJET — ${Math.round(duration*.15)} à ${Math.round(duration*.65)} secondes]\n`+
- `Aujourd'hui, on découvre : ${topic}.\n\n`+
- `Premièrement, prends le temps de comprendre le contexte.\n`+
- `Ensuite, découvre les éléments les plus intéressants et ce qui les rend particuliers.\n`+
- `Enfin, retiens le détail qui fait toute la différence.\n\n`+
- `[CONCLUSION]\n${pick(style.close)}\n\n`+
- (extra?`[INSTRUCTION SUPPLÉMENTAIRE]\n${extra}\n`:"")+
- `\nNote : personnalise les exemples avec tes propres informations avant publication.`;
-
- const pack={
-  id:Date.now(),topic,platform,duration,tone,
-  hook,
-  title:pick(titles)+" : "+topic,
-  description:`Aujourd'hui, on parle de ${topic} ! 🚀\n\nQu'en penses-tu ? Dis-le en commentaire !\n\nCréé avec ClipForge.`,
-  hashtags:"#"+topic.toLowerCase().replace(/[^a-z0-9à-ÿ]/gi,"")+" #"+platform.replace(/\s/g,"")+" #creator #content #video",
-  script
- };
- currentPack=pack;
- renderPack(pack);
- historyData.unshift(pack);
- historyData=historyData.slice(0,30);
- saveHistory();
- updateStats();
- toast("Ton contenu est prêt !");
-}
-
-function renderPack(p){
- const blocks=[
-  ["⚡ HOOK",p.hook],
-  ["✦ VIDEO TITLE",p.title],
-  ["🎬 VIDEO SCRIPT",p.script],
-  ["📝 DESCRIPTION",p.description],
-  ["#️⃣ HASHTAGS",p.hashtags]
- ];
- $("results").className="output";
- $("results").innerHTML=blocks.map((b,i)=>`
-  <div class="output-block">
-   <div class="output-top"><strong>${b[0]}</strong>
-   <button class="copy" onclick="copyText(${JSON.stringify(b[1]).replace(/</g,"\\u003c")})">COPY</button></div>
-   <div class="output-text">${escapeHTML(b[1])}</div>
-  </div>`).join("")+
-  `<button class="primary" onclick="copyAll()">COPY ENTIRE CONTENT PACK</button>`;
-}
-
-function escapeHTML(s){
- return String(s).replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
- }[c]));
-}
-
-async function copyText(text){
- try{await navigator.clipboard.writeText(text);toast("Copied to clipboard !")}
- catch(e){toast("Copie non disponible sur ce navigateur.")}
-}
-function copyAll(){
- if(!currentPack)return;
- copyText(Object.entries(currentPack)
-  .filter(([k])=>!["id","topic","platform","duration","tone"].includes(k))
-  .map(([k,v])=>k.toUpperCase()+"\n"+v).join("\n\n"));
-}
-
-function saveHistory(){
- localStorage.setItem("clipforge_history",JSON.stringify(historyData));
- renderHistory();
-}
-function renderHistory(){
- $("historyList").innerHTML=historyData.length?historyData.map(p=>`
-  <div class="history-item">
-   <strong>${escapeHTML(p.topic)}</strong>
-   <p>${escapeHTML(p.platform)} · ${p.duration} seconds</p>
-   <button class="secondary" onclick="openSaved(${p.id})">View</button>
-   <button class="secondary" onclick="deleteSaved(${p.id})">Delete</button>
-  </div>`).join(""):'<div class="empty">No creations yet. Your content will appear here.</div>';
-}
-function openSaved(id){
- const p=historyData.find(x=>x.id===id);
- if(!p)return;
- currentPack=p;
- navigate("studio");
- renderPack(p);
-}
-function deleteSaved(id){
- historyData=historyData.filter(p=>p.id!==id);
- saveHistory();updateStats();
- toast("Creation deleted");
-}
-function clearHistory(){
- if(!confirm("Delete all your saved creations?"))return;
- historyData=[];saveHistory();updateStats();toast("History cleared");
+function saveData(){
+  localStorage.setItem("clipforge_history",JSON.stringify(historyData));
+  localStorage.setItem("clipforge_created",String(totalCreated));
+  updateStats();
 }
 function updateStats(){
- $("statTotal").textContent=historyData.length;
- $("statScripts").textContent=historyData.filter(p=>p.script).length;
+  $("statCreated").textContent=totalCreated;
+  $("statSaved").textContent=historyData.length;
 }
-function quickIdea(){
- const ideas=[
- "5 mistakes beginners make in gaming",
- "The funniest moment in an online game",
- "A surprising fact about technology",
- "My biggest lesson from learning something new",
- "3 tips to improve your video editing",
- "A challenge with an unexpected ending",
- "The story behind a popular game"
- ];
- $("topic").value=pick(ideas);
- navigate("studio");
- toast("New idea selected !");
+function toast(message){
+  $("toast").textContent=message;
+  $("toast").classList.add("show");
+  setTimeout(()=>$("toast").classList.remove("show"),1800);
 }
-renderHistory();
+async function copyText(text){
+  try{
+    await navigator.clipboard.writeText(text);
+    toast("Copied to clipboard!");
+  }catch(e){
+    const area=document.createElement("textarea");
+    area.value=text;document.body.appendChild(area);
+    area.select();document.execCommand("copy");area.remove();
+    toast("Copied!");
+  }
+}
+function showPage(page){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));
+  $(page).classList.add("active");
+  document.querySelectorAll(".nav").forEach(n=>{
+    if(n.dataset.page===page)n.classList.add("active");
+  });
+  const names={
+    studio:["Creator Studio","Turn your ideas into content that gets noticed."],
+    history:["Your History","Your saved content packs."],
+    about:["About CLIPFORGE","Discover your creator workspace."]
+  };
+  $("pageTitle").textContent=names[page][0];
+  $("pageSubtitle").textContent=names[page][1];
+  if(page==="history")renderHistory();
+}
+document.querySelectorAll(".nav").forEach(n=>{
+  n.addEventListener("click",()=>showPage(n.dataset.page));
+});
+
+function makePack(topic,platform,duration,tone,audience){
+  const clean=topic.trim().replace(/[.!?]+$/,"");
+  const hooks={
+    Funny:[
+      `POV: You thought "${clean}" was going to be easy...`,
+      `Nobody warned me about "${clean}" 😂`,
+      `This is what happens when "${clean}" goes completely wrong...`
+    ],
+    Dramatic:[
+      `Everything changed when "${clean}" happened...`,
+      `I never expected this ending...`,
+      `One moment. One decision. Everything changed.`
+    ],
+    Energetic:[
+      `LET'S GO! Today we're taking on "${clean}"!`,
+      `You need to see what happens next!`,
+      `This might be the craziest challenge yet!`
+    ],
+    Educational:[
+      `Here's something you should know about "${clean}"...`,
+      `3 things to understand before trying this.`,
+      `Let me explain why this matters.`
+    ],
+    Storytelling:[
+      `It all started with "${clean}"...`,
+      `At first, everything seemed normal...`,
+      `This story took a turn I didn't expect.`
+    ],
+    Professional:[
+      `Let's break down "${clean}" in a simple way.`,
+      `Here's what you need to know.`,
+      `A closer look at an interesting idea.`
+    ]
+  };
+  const chosen=hooks[tone]||hooks.Funny;
+  const hook=chosen[Math.floor(Math.random()*chosen.length)];
+  const script=`[0–3 SEC] HOOK\n${hook}\n\n[3–10 SEC] SETUP\nIntroduce the idea: ${clean}. Give viewers a reason to keep watching.\n\n[10–${duration}] MAIN CONTENT\nShow the most interesting moments, explain what is happening, and build toward the best part. Keep the pace moving.\n\n[FINAL MOMENT] PAYOFF + CTA\nDeliver a satisfying ending and invite viewers to comment their opinion or follow for more.`;
+  const titleOptions=[
+    `${clean}... WHAT HAPPENED?!`,
+    `You need to see this 👀`,
+    `The truth about ${clean}`,
+    `I wasn't ready for this 😂`
+  ];
+  const title=titleOptions[Math.floor(Math.random()*titleOptions.length)];
+  const descriptions={
+    Funny:`Things got out of control 😂 What would you have done?`,
+    Dramatic:`You won't expect what happens next. Stay until the end.`,
+    Energetic:`That was INSANE! More content coming soon ⚡`,
+    Educational:`A quick breakdown of ${clean}. What do you think?`,
+    Storytelling:`Every story has a twist. Here's mine.`,
+    Professional:`Exploring ${clean}. Share your thoughts in the comments.`
+  };
+  const tags=["#fyp","#viral","#contentcreator","#shorts","#trending"];
+  const extra=clean.toLowerCase().replace(/[^a-z0-9À-ÿ ]/g,"").split(/\s+/).filter(Boolean).slice(0,2);
+  extra.forEach(w=>tags.push("#"+w));
+  if(platform==="TikTok")tags.push("#tiktok");
+  if(platform==="Instagram Reels")tags.push("#reels");
+  if(platform==="YouTube Shorts")tags.push("#youtubeshorts");
+  return {
+    id:Date.now(),
+    topic:clean,platform,duration,tone,audience,
+    hook,script,title,
+    description:descriptions[tone]||descriptions.Funny,
+    hashtags:[...new Set(tags)].join(" ")
+  };
+}
+function renderResults(pack){
+  const items=[
+    ["HOOK",pack.hook],
+    ["VIDEO TITLE",pack.title],
+    ["VIDEO SCRIPT",pack.script],
+    ["DESCRIPTION",pack.description],
+    ["HASHTAGS",pack.hashtags]
+  ];
+  $("results").className="result-list";
+  $("results").innerHTML="";
+  items.forEach(([name,value])=>{
+    const item=document.createElement("div");
+    item.className="result-item";
+    const top=document.createElement("div");
+    top.className="result-top";
+    const strong=document.createElement("strong");
+    strong.textContent=name;
+    const btn=document.createElement("button");
+    btn.className="secondary";
+    btn.textContent="Copy";
+    btn.addEventListener("click",()=>copyText(value));
+    top.append(strong,btn);
+    const text=document.createElement("div");
+    text.className="result-text";
+    text.textContent=value;
+    item.append(top,text);
+    $("results").appendChild(item);
+  });
+}
+function renderHistory(){
+  const list=$("historyList");
+  list.innerHTML="";
+  if(!historyData.length){
+    list.innerHTML='<div class="empty"><div class="empty-icon">◷</div>No saved content packs yet.</div>';
+    return;
+  }
+  historyData.forEach(pack=>{
+    const item=document.createElement("div");
+    item.className="result-item history-item";
+    const info=document.createElement("div");
+    const title=document.createElement("strong");
+    title.textContent=pack.topic;
+    const small=document.createElement("small");
+    small.textContent=pack.platform+" · "+pack.duration+" · "+pack.tone;
+    info.append(title,small);
+    const btn=document.createElement("button");
+    btn.className="secondary";
+    btn.textContent="View";
+    btn.addEventListener("click",()=>{
+      showPage("studio");
+      renderResults(pack);
+    });
+    item.append(info,btn);
+    list.appendChild(item);
+  });
+}
+$("generate").addEventListener("click",()=>{
+  const topic=$("topic").value.trim();
+  if(topic.length<3){
+    toast("Enter a topic first!");
+    $("topic").focus();
+    return;
+  }
+  const pack=makePack(topic,$("platform").value,$("duration").value,$("tone").value,$("audience").value);
+  renderResults(pack);
+  historyData.unshift(pack);
+  historyData=historyData.slice(0,50);
+  totalCreated++;
+  saveData();
+  toast("Content pack created!");
+});
+$("clearHistory").addEventListener("click",()=>{
+  if(!historyData.length){toast("History is already empty.");return;}
+  if(confirm("Delete all saved content packs?")){
+    historyData=[];
+    saveData();
+    renderHistory();
+    toast("History cleared.");
+  }
+});
 updateStats();
 </script>
 </body>
