@@ -8,120 +8,87 @@
 <title>ClipForge — Creator Studio</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
-
 :root{
-  --bg:#080914;--panel:#101222;--panel2:#15182b;
-  --line:rgba(255,255,255,.08);--text:#f5f6ff;
-  --muted:#9298b5;--purple:#9875ff;--blue:#50b9ff;
-  --cyan:#55e1d0;--radius:18px;
+--bg:#080914;--panel:#101323;--panel2:#171a30;--line:#262943;
+--text:#f5f6ff;--muted:#9299b8;--purple:#9b78ff;--blue:#54baff;
+--cyan:#55e1d0;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
-font-family:'DM Sans',sans-serif;min-height:100vh}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
-#loader{position:fixed;inset:0;background:#080914;z-index:99;
-display:flex;align-items:center;justify-content:center;flex-direction:column;
-transition:opacity .5s}
+#loader{position:fixed;inset:0;background:#080914;z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:.5s}
 .logo{font:700 27px 'Space Grotesk';letter-spacing:-1px}
 .logo span{color:var(--purple)}
-.loader-icon{width:48px;height:48px;border:3px solid #272640;
-border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:22px}
+.loader-icon{width:48px;height:48px;border:3px solid #252640;border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:22px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loader-line{height:3px;width:180px;background:#24243b;border-radius:8px;margin-top:20px;overflow:hidden}
-.loader-line:after{content:"";display:block;width:45%;height:100%;
-background:linear-gradient(90deg,var(--purple),var(--blue));animation:load 1.4s infinite}
-@keyframes load{from{transform:translateX(-100%)}to{transform:translateX(240%)}}
+.loader-line{width:180px;height:3px;background:#24243b;margin-top:20px;overflow:hidden;border-radius:9px}
+.loader-line:after{content:"";display:block;height:100%;width:40%;background:linear-gradient(90deg,var(--purple),var(--blue));animation:load 1.3s infinite}
+@keyframes load{to{transform:translateX(350%)}}
 .app{display:none;min-height:100vh}
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:245px;
-background:#0c0e1b;border-right:1px solid var(--line);
-padding:27px 17px;display:flex;flex-direction:column;z-index:10}
-.brand{padding:0 13px 35px}
-.brand small{display:block;color:var(--muted);font-size:10px;
-letter-spacing:2px;margin-top:5px}
-.nav-label{font-size:10px;letter-spacing:1.8px;color:#646b89;
-padding:12px 13px}
-.nav{display:flex;align-items:center;gap:13px;padding:12px 13px;
-border-radius:11px;color:#a3a8c2;font-size:13px;font-weight:600;
-margin:3px 0;border:1px solid transparent;background:none;text-align:left;width:100%}
-.nav:hover,.nav.active{background:linear-gradient(100deg,rgba(152,117,255,.17),rgba(80,185,255,.06));
-color:white;border-color:rgba(152,117,255,.18)}
-.nav .ico{font-size:17px;width:20px;text-align:center}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:240px;background:#0c0e1b;border-right:1px solid var(--line);padding:26px 16px;display:flex;flex-direction:column;z-index:10}
+.brand{padding:0 12px 34px}
+.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:2px;margin-top:5px}
+.nav-label{font-size:10px;letter-spacing:1.7px;color:#6c7391;padding:12px}
+.nav{display:flex;align-items:center;gap:12px;width:100%;padding:12px;border:1px solid transparent;border-radius:11px;background:none;color:#aab0ca;text-align:left;font-size:13px;font-weight:600;margin:3px 0}
+.nav:hover,.nav.active{background:rgba(155,120,255,.13);border-color:rgba(155,120,255,.2);color:white}
+.nav .ico{font-size:17px;width:20px}
 .side-bottom{margin-top:auto;background:var(--panel);padding:15px;border:1px solid var(--line);border-radius:14px}
 .side-bottom p{font-size:12px;color:var(--muted);line-height:1.5}
-.side-bottom strong{font-size:13px}
-.main{margin-left:245px;padding:30px 38px 60px;max-width:1600px}
+.main{margin-left:240px;padding:28px 35px 60px;max-width:1600px}
+.mobile-head{display:none}
 .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
 .crumb{font-size:12px;color:var(--muted)}
 .crumb b{color:white}
-.status{font-size:11px;color:#73e2c4;background:rgba(85,225,208,.09);
-border:1px solid rgba(85,225,208,.2);padding:8px 12px;border-radius:30px}
-.status:before{content:"";display:inline-block;width:6px;height:6px;
-background:#55e1b5;border-radius:50%;margin-right:7px}
-h1{font:700 clamp(27px,4vw,39px) 'Space Grotesk';letter-spacing:-1.5px;margin:0}
-.gradient{background:linear-gradient(90deg,#b99aff,#66c9ff);
--webkit-background-clip:text;background-clip:text;color:transparent}
+.status{font-size:11px;color:#73e2c4;background:rgba(85,225,208,.08);border:1px solid rgba(85,225,208,.2);padding:8px 12px;border-radius:30px}
+.status:before{content:"";display:inline-block;width:6px;height:6px;background:#55e1b5;border-radius:50%;margin-right:7px}
+h1{font:700 clamp(28px,4vw,40px) 'Space Grotesk';letter-spacing:-1.5px;margin:0}
+.gradient{background:linear-gradient(90deg,#bd9aff,#66c9ff);-webkit-background-clip:text;background-clip:text;color:transparent}
 .subtitle{color:var(--muted);font-size:14px;margin:10px 0 27px;line-height:1.6}
-.panel{background:var(--panel);border:1px solid var(--line);
-border-radius:var(--radius);padding:22px}
-.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}
-.section-head h2{font:600 16px 'Space Grotesk';margin:0}
-.muted{font-size:12px;color:var(--muted)}
-.tools{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;margin-bottom:20px}
-.tool{background:var(--panel);border:1px solid var(--line);color:#aeb3ca;
-border-radius:14px;padding:15px 7px;text-align:center;transition:.2s}
-.tool:hover,.tool.active{border-color:rgba(152,117,255,.7);
-background:rgba(152,117,255,.12);color:white;transform:translateY(-2px)}
-.tool .ico{font-size:22px;display:block;margin-bottom:9px}
+.tools{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;margin-bottom:19px}
+.tool{background:var(--panel);border:1px solid var(--line);color:#aeb3ca;border-radius:14px;padding:15px 5px;text-align:center;transition:.2s}
+.tool:hover,.tool.active{border-color:var(--purple);background:rgba(155,120,255,.12);color:white;transform:translateY(-2px)}
+.tool .ico{font-size:22px;display:block;margin-bottom:8px}
 .tool b{font-size:11px}
-.workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.9fr);gap:18px}
-.field{margin-bottom:17px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:21px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.section-head h2,.output-top h2{font:600 16px 'Space Grotesk';margin:0}
+.muted{font-size:12px;color:var(--muted)}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(290px,.9fr);gap:17px}
+.field{margin-bottom:16px}
 .field label{display:block;font-size:12px;color:#c6c9dc;font-weight:600;margin-bottom:8px}
-input,textarea,select{width:100%;background:#0b0d19;color:white;
-border:1px solid var(--line);border-radius:10px;padding:12px 13px;
-outline:none;font-size:13px}
+input,textarea,select{width:100%;background:#0b0d19;color:white;border:1px solid var(--line);border-radius:10px;padding:12px;outline:none;font-size:13px}
 input:focus,textarea:focus,select:focus{border-color:var(--purple)}
-textarea{resize:vertical;min-height:92px;line-height:1.6}
+textarea{resize:vertical;min-height:95px;line-height:1.6}
 select option{background:#111426}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.generate{width:100%;border:0;border-radius:11px;padding:14px;
-color:white;font-weight:800;font-size:13px;
-background:linear-gradient(100deg,#8964f4,#478de9);
-box-shadow:0 8px 25px rgba(125,91,235,.2);transition:.2s}
-.generate:hover{filter:brightness(1.13);transform:translateY(-1px)}
-.output{min-height:400px;display:flex;flex-direction:column}
+.generate{width:100%;border:0;border-radius:11px;padding:14px;color:white;font-weight:800;font-size:13px;background:linear-gradient(100deg,#8964f4,#478de9);box-shadow:0 8px 25px #765be52c}
+.generate:active{transform:scale(.99)}
+.output{min-height:390px;display:flex;flex-direction:column}
+.output-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}
+.output-content{white-space:pre-wrap;line-height:1.8;font-size:13px;color:#e7e9f7;flex:1;overflow-wrap:anywhere}
 .empty{margin:auto;text-align:center;max-width:240px;color:var(--muted)}
 .empty .big{font-size:39px;margin-bottom:13px}
 .empty p{font-size:12px;line-height:1.6}
-.output-content{white-space:pre-wrap;line-height:1.8;font-size:13px;color:#e7e9f7;flex:1}
-.output-actions{display:flex;gap:9px;margin-top:18px}
-.secondary{background:#1b1e32;border:1px solid var(--line);color:#dfe2f4;
-border-radius:9px;padding:10px 14px;font-size:12px;font-weight:700}
+.output-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.secondary{background:#1b1e32;border:1px solid var(--line);color:#dfe2f4;border-radius:9px;padding:10px 13px;font-size:12px;font-weight:700}
 .secondary:hover{border-color:var(--purple)}
-.output-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}
-.output-top h2{font:600 16px 'Space Grotesk';margin:0}
-.history{margin-top:20px}
-.history-item{display:flex;justify-content:space-between;gap:10px;
-padding:13px 0;border-bottom:1px solid var(--line);font-size:12px}
+.history-item{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);font-size:12px}
 .history-item span{color:var(--muted)}
-.mobile-head{display:none}
-.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);
-background:#20243a;border:1px solid var(--line);color:white;
-padding:12px 18px;border-radius:10px;font-size:12px;opacity:0;
-transition:.25s;z-index:100;pointer-events:none}
+.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);background:#20243a;border:1px solid var(--line);color:white;padding:12px 18px;border-radius:10px;font-size:12px;opacity:0;transition:.25s;z-index:200;pointer-events:none}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:1100px){.tools{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:800px){
 .sidebar{display:none}
-.main{margin:0;padding:20px 16px 45px}
-.mobile-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.main{margin:0;padding:19px 15px 45px}
+.mobile-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:27px}
 .topbar{margin-bottom:22px}
 .workspace{grid-template-columns:1fr}
 .tools{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .tool{padding:13px 4px}
 .tool b{font-size:10px}
-.panel{padding:17px}
-.output{min-height:260px}
+.panel{padding:16px}
+.output{min-height:270px}
 }
 @media(max-width:420px){
 .tools{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -131,175 +98,136 @@ h1{font-size:29px}
 </style>
 </head>
 <body>
+
 <div id="loader">
-  <div class="loader-icon"></div>
-  <div class="logo">CLIP<span>FORGE</span></div>
-  <div class="muted" style="margin-top:8px">Preparing your creator studio...</div>
-  <div class="loader-line"></div>
+ <div class="loader-icon"></div>
+ <div class="logo">CLIP<span>FORGE</span></div>
+ <div class="muted" style="margin-top:8px">Preparing your creator studio...</div>
+ <div class="loader-line"></div>
 </div>
 
 <div class="app" id="app">
 <aside class="sidebar">
-  <div class="brand">
-    <div class="logo">CLIP<span>FORGE</span></div>
-    <small>CREATOR STUDIO</small>
-  </div>
-  <div class="nav-label">WORKSPACE</div>
-  <button class="nav active" onclick="showPage('studio',this)"><span class="ico">✦</span> Creator Studio</button>
-  <button class="nav" onclick="showPage('history',this)"><span class="ico">◷</span> History</button>
-  <div class="nav-label">TOOLS</div>
-  <button class="nav" onclick="chooseTool('hook')"><span class="ico">⚡</span> Hook Generator</button>
-  <button class="nav" onclick="chooseTool('script')"><span class="ico">▤</span> Script Writer</button>
-  <button class="nav" onclick="chooseTool('caption')"><span class="ico">✎</span> Caption Maker</button>
-  <button class="nav" onclick="chooseTool('hashtags')"><span class="ico">#</span> Hashtag Finder</button>
-  <div class="side-bottom">
-    <strong>✦ Creator mode</strong>
-    <p>Your creative workspace. Build, refine and organize your content ideas.</p>
-  </div>
+ <div class="brand"><div class="logo">CLIP<span>FORGE</span></div><small>CREATOR STUDIO</small></div>
+ <div class="nav-label">WORKSPACE</div>
+ <button class="nav active" onclick="showPage('studio',this)">✦ &nbsp; Creator Studio</button>
+ <button class="nav" onclick="showPage('history',this)">◷ &nbsp; History</button>
+ <div class="nav-label">TOOLS</div>
+ <button class="nav" onclick="chooseTool('hook')">⚡ &nbsp; Hook Generator</button>
+ <button class="nav" onclick="chooseTool('script')">▤ &nbsp; Script Writer</button>
+ <button class="nav" onclick="chooseTool('caption')">✎ &nbsp; Caption Maker</button>
+ <button class="nav" onclick="chooseTool('hashtags')"># &nbsp; Hashtag Finder</button>
+ <div class="side-bottom"><strong>✦ Creator mode</strong><p>Your creative workspace. Build, refine and organize your content ideas.</p></div>
 </aside>
 
 <main class="main">
-  <div class="mobile-head">
-    <div class="logo">CLIP<span>FORGE</span></div>
-    <span class="status">Studio ready</span>
+ <div class="mobile-head"><div class="logo">CLIP<span>FORGE</span></div><span class="status">Studio ready</span></div>
+ <div class="topbar"><div class="crumb">Workspace / <b id="crumb">Creator Studio</b></div><span class="status">All systems ready</span></div>
+
+ <section id="studio">
+  <h1>Create content that <span class="gradient">stands out.</span></h1>
+  <p class="subtitle">Your all-in-one workspace for short-form content creation.</p>
+
+  <div class="tools">
+   <button class="tool active" data-tool="hook"><span class="ico">⚡</span><b>Hooks</b></button>
+   <button class="tool" data-tool="script"><span class="ico">▤</span><b>Scripts</b></button>
+   <button class="tool" data-tool="caption"><span class="ico">✎</span><b>Captions</b></button>
+   <button class="tool" data-tool="hashtags"><span class="ico">#</span><b>Hashtags</b></button>
+   <button class="tool" data-tool="title"><span class="ico">✧</span><b>Titles</b></button>
+   <button class="tool" data-tool="ideas"><span class="ico">☼</span><b>Ideas</b></button>
+   <button class="tool" data-tool="cta"><span class="ico">➜</span><b>CTAs</b></button>
   </div>
-  <div class="topbar">
-    <div class="crumb">Workspace / <b id="crumb">Creator Studio</b></div>
-    <span class="status">All systems ready</span>
+
+  <div class="workspace">
+   <div class="panel">
+    <div class="section-head"><h2>Content settings</h2><span class="muted">Customize your output</span></div>
+    <div class="field"><label for="topic">What's your video about?</label><textarea id="topic" placeholder="Example: 5 mistakes beginner creators make..."></textarea></div>
+    <div class="two">
+     <div class="field"><label>Platform</label><select id="platform"><option>TikTok</option><option>YouTube Shorts</option><option>Instagram Reels</option></select></div>
+     <div class="field"><label>Language</label><select id="language"><option value="English">English</option><option value="French">French</option><option value="Spanish">Spanish</option><option value="German">German</option><option value="Dutch">Dutch</option></select></div>
+     <div class="field"><label>Video duration</label><select id="duration"><option>15 seconds</option><option selected>30 seconds</option><option>45 seconds</option><option>60 seconds</option><option>90 seconds</option></select></div>
+     <div class="field"><label>Tone</label><select id="tone"><option>Engaging</option><option>Funny</option><option>Professional</option><option>Educational</option><option>Dramatic</option><option>Casual</option></select></div>
+    </div>
+    <div class="field"><label>Niche / category</label><select id="niche"><option>General</option><option>Gaming</option><option>Storytelling</option><option>Education</option><option>Business</option><option>Fitness</option><option>Technology</option><option>Lifestyle</option><option>Entertainment</option><option>Food</option><option>Sports</option></select></div>
+    <button class="generate" id="generate">✦ Generate content</button>
+    <p class="muted" style="text-align:center;margin:12px 0 0">Free built-in templates · No API required</p>
+   </div>
+
+   <div class="panel output">
+    <div class="output-top"><h2 id="outputTitle">Your result</h2><span class="muted" id="outputType">HOOKS</span></div>
+    <div id="result" class="empty"><div class="big">✧</div><strong>Your next idea starts here.</strong><p>Choose a tool, enter your topic and generate your content.</p></div>
+    <div class="output-actions" id="actions" style="display:none">
+     <button class="secondary" id="copy">▣ Copy</button>
+     <button class="secondary" id="save">♡ Save</button>
+     <button class="secondary" id="again">↻ Regenerate</button>
+    </div>
+   </div>
   </div>
+ </section>
 
-  <section id="studio">
-    <h1>Create content that <span class="gradient">stands out.</span></h1>
-    <p class="subtitle">Your all-in-one workspace for short-form content creation.</p>
-
-    <div class="tools" id="tools">
-      <button class="tool active" data-tool="hook"><span class="ico">⚡</span><b>Hooks</b></button>
-      <button class="tool" data-tool="script"><span class="ico">▤</span><b>Scripts</b></button>
-      <button class="tool" data-tool="caption"><span class="ico">✎</span><b>Captions</b></button>
-      <button class="tool" data-tool="hashtags"><span class="ico">#</span><b>Hashtags</b></button>
-      <button class="tool" data-tool="title"><span class="ico">✧</span><b>Titles</b></button>
-      <button class="tool" data-tool="ideas"><span class="ico">☼</span><b>Ideas</b></button>
-      <button class="tool" data-tool="cta"><span class="ico">➜</span><b>CTAs</b></button>
-    </div>
-
-    <div class="workspace">
-      <div class="panel">
-        <div class="section-head">
-          <h2>Content settings</h2><span class="muted">Customize your output</span>
-        </div>
-        <div class="field">
-          <label for="topic">What's your video about?</label>
-          <textarea id="topic" placeholder="Example: 5 mistakes beginner creators make..."></textarea>
-        </div>
-        <div class="two">
-          <div class="field">
-            <label>Platform</label>
-            <select id="platform">
-              <option>TikTok</option><option>YouTube Shorts</option>
-              <option>Instagram Reels</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Language</label>
-            <select id="language">
-              <option value="English">English</option><option value="French">French</option>
-              <option value="Spanish">Spanish</option><option value="German">German</option>
-              <option value="Dutch">Dutch</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Video duration</label>
-            <select id="duration">
-              <option>15 seconds</option><option selected>30 seconds</option>
-              <option>45 seconds</option><option>60 seconds</option>
-              <option>90 seconds</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Tone</label>
-            <select id="tone">
-              <option>Engaging</option><option>Funny</option><option>Professional</option>
-              <option>Educational</option><option>Dramatic</option><option>Casual</option>
-            </select>
-          </div>
-        </div>
-        <div class="field">
-          <label>Niche / category</label>
-          <select id="niche">
-            <option>General</option><option>Gaming</option><option>Storytelling</option>
-            <option>Education</option><option>Business</option><option>Fitness</option>
-            <option>Technology</option><option>Lifestyle</option><option>Entertainment</option>
-            <option>Food</option><option>Sports</option>
-          </select>
-        </div>
-        <button class="generate" id="generate">✦ Generate content</button>
-        <p class="muted" style="text-align:center;margin:12px 0 0">Free built-in content templates · No API required</p>
-      </div>
-
-      <div class="panel output">
-        <div class="output-top">
-          <h2 id="outputTitle">Your result</h2>
-          <span class="muted" id="outputType">HOOKS</span>
-        </div>
-        <div id="result" class="empty">
-          <div class="big">✧</div>
-          <strong>Your next idea starts here.</strong>
-          <p>Choose a tool, enter your topic and generate your content.</p>
-        </div>
-        <div class="output-actions" id="actions" style="display:none">
-          <button class="secondary" id="copy">▣ Copy</button>
-          <button class="secondary" id="save">♡ Save</button>
-          <button class="secondary" id="again">↻ Regenerate</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="historyPage" style="display:none">
-    <h1>Your <span class="gradient">history.</span></h1>
-    <p class="subtitle">Your saved creations, all in one place.</p>
-    <div class="panel">
-      <div class="section-head"><h2>Saved content</h2>
-      <button class="secondary" onclick="clearHistory()">Clear history</button></div>
-      <div id="historyList" class="muted">No saved content yet.</div>
-    </div>
-  </section>
+ <section id="historyPage" style="display:none">
+  <h1>Your <span class="gradient">history.</span></h1>
+  <p class="subtitle">Your saved creations, all in one place.</p>
+  <div class="panel"><div class="section-head"><h2>Saved content</h2><button class="secondary" onclick="clearHistory()">Clear history</button></div><div id="historyList" class="muted">No saved content yet.</div></div>
+ </section>
 </main>
 </div>
 <div class="toast" id="toast"></div>
 
 <script>
-let currentTool='hook';
-let currentResult='';
-let historyData=JSON.parse(localStorage.getItem('clipforge_history')||'[]');
+'use strict';
 
-const toolNames={
+const $ = id => document.getElementById(id);
+const names = {
  hook:'Hook Generator',script:'Script Writer',caption:'Caption Maker',
  hashtags:'Hashtag Finder',title:'Title Generator',ideas:'Video Ideas',cta:'Call to Action'
 };
-const $=id=>document.getElementById(id);
+let currentTool='hook';
+let currentResult='';
+let historyData=[];
+
+try{
+ const saved=JSON.parse(localStorage.getItem('clipforge_history')||'[]');
+ if(Array.isArray(saved))historyData=saved;
+}catch(e){historyData=[]}
 
 window.addEventListener('load',()=>{
  setTimeout(()=>{
   $('loader').style.opacity='0';
-  setTimeout(()=>{$('loader').style.display='none';$('app').style.display='block'},500);
- },1300);
+  setTimeout(()=>{
+   $('loader').style.display='none';
+   $('app').style.display='block';
+  },500);
+ },1200);
 });
 
-document.querySelectorAll('.tool').forEach(btn=>{
- btn.addEventListener('click',()=>{
-  document.querySelectorAll('.tool').forEach(x=>x.classList.remove('active'));
-  btn.classList.add('active');
-  currentTool=btn.dataset.tool;
-  $('outputTitle').textContent=toolNames[currentTool];
-  $('outputType').textContent=currentTool.toUpperCase();
+function toast(message){
+ $('toast').textContent=message;
+ $('toast').classList.add('show');
+ setTimeout(()=>$('toast').classList.remove('show'),2200);
+}
+
+function selectTool(tool){
+ if(!names[tool])return;
+ currentTool=tool;
+ document.querySelectorAll('.tool').forEach(btn=>{
+  btn.classList.toggle('active',btn.dataset.tool===tool);
  });
+ $('outputTitle').textContent=names[tool];
+ $('outputType').textContent=tool.toUpperCase();
+ $('result').className='empty';
+ $('result').innerHTML='<div class="big">✧</div><strong>'+names[tool]+' selected.</strong><p>Enter your topic and press Generate content.</p>';
+ $('actions').style.display='none';
+ currentResult='';
+}
+
+document.querySelectorAll('.tool').forEach(btn=>{
+ btn.addEventListener('click',()=>selectTool(btn.dataset.tool));
 });
 
 function chooseTool(tool){
- const btn=document.querySelector('[data-tool="'+tool+'"]');
- if(btn)btn.click();
- showPage('studio',document.querySelector('.nav'));
+ selectTool(tool);
+ showPage('studio',null);
 }
 
 function showPage(page,button){
@@ -312,142 +240,223 @@ function showPage(page,button){
 }
 
 function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
+
 function generateContent(){
  const topic=$('topic').value.trim();
- if(!topic){toast('Please enter a video topic first.');$('topic').focus();return}
- const platform=$('platform').value;
+ if(!topic){toast('Please enter a topic first.');$('topic').focus();return}
  const language=$('language').value;
+ const platform=$('platform').value;
  const duration=$('duration').value;
  const tone=$('tone').value;
  const niche=$('niche').value;
- const t=topic.replace(/[.!?]+$/,'');
- const french=language==='French';
- const spanish=language==='Spanish';
- const german=language==='German';
- const dutch=language==='Dutch';
- const words={
-  hook:french?[
-   `Tu fais probablement cette erreur avec ${t}…`,
-   `Personne ne t'explique vraiment ${t}.`,
-   `Voici ce que tu dois absolument savoir sur ${t}.`,
-   `Attends avant de passer à la suite : ${t} pourrait tout changer.`
-  ]:spanish?[
-   `Nadie te cuenta esto sobre ${t}.`,`Deja de cometer este error con ${t}.`,
-   `Esto puede cambiar tu forma de ver ${t}.`
-  ]:german?[
-   `Das solltest du über ${t} wissen.`,`Mach diesen Fehler bei ${t} nicht.`,
-   `Kaum jemand spricht über ${t}.`
-  ]:dutch?[
-   `Dit moet je weten over ${t}.`,`Maak deze fout niet bij ${t}.`,
-   `Niemand vertelt je dit over ${t}.`
-  ]:[
-   `You're probably making this mistake with ${t}...`,
-   `Nobody tells you the truth about ${t}.`,
-   `Here's what you need to know about ${t}.`,
-   `Stop scrolling — this changes how you think about ${t}.`
-  ],
-  caption:french?`Aujourd'hui, on parle de ${t}.\n\nGarde cette vidéo de côté et partage-la avec quelqu'un qui en a besoin.\n\n`: `Let's talk about ${t}.\n\nSave this video and share it with someone who needs to see it.\n\n`,
-  cta:french?[
-   `Abonne-toi pour plus de contenu sur ${t}.`,
-   `Dis-moi ton avis en commentaire !`,
-   `Enregistre cette vidéo pour ne pas oublier.`,
-   `Partage ça avec un ami que ça pourrait aider.`
-  ]:[
-   `Follow for more content about ${t}.`,
-   `Tell me what you think in the comments!`,
-   `Save this video so you can come back to it.`,
-   `Share this with a friend who needs it.`
-  ]
- };
+ const fr=language==='French';
+ const intro=fr?'INTRODUCTION':'INTRODUCTION';
+ const hooks=fr?[
+  `Tu fais probablement cette erreur avec ${topic}...`,
+  `Personne ne t'explique vraiment ${topic}.`,
+  `Voici ce que tu dois savoir sur ${topic}.`,
+  `Attends ! Tu dois découvrir ceci sur ${topic}.`
+ ]:[
+  `You're probably making this mistake with ${topic}...`,
+  `Nobody tells you the truth about ${topic}.`,
+  `Here's what you need to know about ${topic}.`,
+  `Stop scrolling — this changes how you think about ${topic}.`
+ ];
+ const hook=pick(hooks);
  let result='';
- const hook=pick(words.hook);
- if(currentTool==='hook'){
-  result=[hook,'\n'+pick(words.hook),'\n'+pick(words.hook)].join('\n\n');
- }
- if(currentTool==='script'){
-  const intro=french?'[0–3s] ACCROCHE': '[0–3s] HOOK';
-  const body=french?'[3–20s] DÉVELOPPEMENT':'[3–20s] MAIN CONTENT';
-  const ending=french?'[20–30s] CONCLUSION':'[20–30s] ENDING';
-  result=`${intro}\n${hook}\n\n${body}\nAujourd'hui, on va découvrir ${t}. Commence par présenter le problème, donne deux ou trois points utiles et illustre-les avec un exemple simple.\n\n${ending}\nRésume ton idée principale et termine par une question pour encourager les commentaires.\n\n[VISUAL NOTE]\nUse quick cuts, subtitles and relevant visuals.\n\n[PLATFORM]\n${platform} · ${duration} · ${tone} · ${niche}`;
- }
- if(currentTool==='caption'){
-  result=words.caption+`#${niche.replace(/\s/g,'')} #${platform.replace(/\s/g,'')} #ContentCreator #Creator`;
- }
- if(currentTool==='hashtags'){
-  const base=['#fyp','#viral','#contentcreator','#creatorcommunity','#shortvideo','#trending','#learnontiktok','#newvideo'];
-  result=[...new Set([`#${niche.replace(/\s/g,'')}`,`#${t.split(' ')[0].replace(/[^a-z0-9]/gi,'')}`,...base])].join('  ');
- }
- if(currentTool==='title'){
+
+ switch(currentTool){
+ case 'hook':
+  result=hooks.map((x,i)=>`${i+1}. ${x}`).join('\n\n');
+  break;
+
+ case 'script':
+  result=`🎬 VIDEO SCRIPT
+
+TOPIC: ${topic}
+PLATFORM: ${platform}
+DURATION: ${duration}
+TONE: ${tone}
+NICHE: ${niche}
+
+━━━━━━━━━━━━━━━━━━
+
+[0–3 SECONDS] HOOK
+${hook}
+
+[3–10 SECONDS] ${intro}
+Introduce the topic: ${topic}.
+Explain why viewers should care.
+
+[10–25 SECONDS] MAIN CONTENT
+POINT 1 — Explain the first important idea.
+POINT 2 — Give a practical example.
+POINT 3 — Share a surprising fact or useful tip.
+
+[FINAL SECTION] CONCLUSION
+Summarize the key message.
+Ask viewers a question to encourage comments.
+
+🎥 EDITING NOTES
+• Use subtitles.
+• Add relevant visuals.
+• Change camera shots or visuals regularly.
+• Keep the pacing engaging.
+
+📱 PLATFORM
+${platform} · ${duration}`;
+  break;
+
+ case 'caption':
+  result=fr?
+  `Aujourd'hui, on parle de ${topic} !
+
+Qu'en penses-tu ? Dis-le en commentaire et partage cette vidéo avec quelqu'un que ça pourrait intéresser.
+
+#${niche.replace(/\s/g,'')} #${platform.replace(/\s/g,'')} #Createur #Video`:
+  `Let's talk about ${topic}!
+
+What do you think? Tell me in the comments and share this video with someone who might find it useful.
+
+#${niche.replace(/\s/g,'')} #${platform.replace(/\s/g,'')} #ContentCreator #Video`;
+  break;
+
+ case 'hashtags':
   result=[
-   `${t}: Everything You Need to Know`,
-   `The Truth About ${t}`,
-   `${t} Explained in ${duration}`,
-   `I Wish I Knew This About ${t}`,
-   `The Beginner's Guide to ${t}`
-  ].join('\n\n');
- }
- if(currentTool==='ideas'){
+   '#'+niche.replace(/\s/g,''),
+   '#'+topic.split(/\s+/)[0].replace(/[^a-z0-9]/gi,''),
+   '#fyp','#viral','#trending','#contentcreator',
+   '#shortvideo','#newvideo','#creatorcommunity','#explore'
+  ].join('  ');
+  break;
+
+ case 'title':
   result=[
-   `1. The beginner's guide to ${t}`,
-   `2. 3 common mistakes people make with ${t}`,
-   `3. Things nobody tells you about ${t}`,
-   `4. Myth vs reality: ${t}`,
-   `5. My personal experience with ${t}`,
-   `6. Reacting to popular opinions about ${t}`,
-   `7. A quick challenge involving ${t}`
-  ].join('\n\n');
+   `${topic}: Everything You Need to Know`,
+   `The Truth About ${topic}`,
+   `${topic} Explained in ${duration}`,
+   `I Wish I Knew This About ${topic}`,
+   `The Beginner's Guide to ${topic}`,
+   `Stop Making These ${topic} Mistakes`
+  ].map((x,i)=>(i+1)+'. '+x).join('\n\n');
+  break;
+
+ case 'ideas':
+  result=[
+   `Beginner's guide to ${topic}`,
+   `3 mistakes people make with ${topic}`,
+   `Things nobody tells you about ${topic}`,
+   `Myths vs reality: ${topic}`,
+   `My personal experience with ${topic}`,
+   `Reacting to popular opinions about ${topic}`,
+   `A challenge involving ${topic}`,
+   `Before and after: ${topic}`,
+   `The biggest lesson I learned about ${topic}`,
+   `Answering common questions about ${topic}`
+  ].map((x,i)=>(i+1)+'. '+x).join('\n\n');
+  break;
+
+ case 'cta':
+  result=fr?
+  `1. Abonne-toi pour plus de contenu !
+
+2. Donne ton avis en commentaire !
+
+3. Enregistre cette vidéo pour la retrouver plus tard !
+
+4. Partage-la avec un ami !
+
+5. Quelle est ton expérience avec ${topic} ?`:
+  `1. Follow for more content!
+
+2. Tell me your opinion in the comments!
+
+3. Save this video for later!
+
+4. Share this with a friend!
+
+5. What's your experience with ${topic}?`;
+  break;
+
+ default:
+  toast('Select a tool first.');
+  return;
  }
- if(currentTool==='cta'){
-  result=words.cta.map((x,i)=>(i+1)+'. '+x).join('\n\n');
- }
+
  currentResult=result;
  $('result').className='output-content';
  $('result').textContent=result;
  $('actions').style.display='flex';
- $('outputTitle').textContent=toolNames[currentTool];
+ $('outputTitle').textContent=names[currentTool];
  $('outputType').textContent=currentTool.toUpperCase();
 }
+
 $('generate').addEventListener('click',generateContent);
 $('again').addEventListener('click',generateContent);
-$('copy').addEventListener('click',async()=>{
- if(!currentResult)return;
- try{await navigator.clipboard.writeText(currentResult);toast('Copied to clipboard!')}
- catch(e){toast('Copy is not available in this browser.')}
-});
+
+async function copyText(text){
+ if(!text){toast('Nothing to copy yet.');return}
+ try{
+  await navigator.clipboard.writeText(text);
+  toast('Copied to clipboard!');
+ }catch(e){
+  const area=document.createElement('textarea');
+  area.value=text;
+  document.body.appendChild(area);
+  area.select();
+  try{document.execCommand('copy');toast('Copied to clipboard!')}
+  catch(err){toast('Please select and copy the text manually.')}
+  area.remove();
+ }
+}
+
+$('copy').addEventListener('click',()=>copyText(currentResult));
+
 $('save').addEventListener('click',()=>{
- if(!currentResult)return;
- historyData.unshift({tool:toolNames[currentTool],topic:$('topic').value,result:currentResult,date:new Date().toLocaleString()});
+ if(!currentResult){toast('Generate something first.');return}
+ historyData.unshift({
+  tool:names[currentTool],
+  topic:$('topic').value.trim(),
+  result:currentResult,
+  date:new Date().toLocaleString()
+ });
  historyData=historyData.slice(0,50);
- localStorage.setItem('clipforge_history',JSON.stringify(historyData));
- toast('Saved to your history!');
+ try{
+  localStorage.setItem('clipforge_history',JSON.stringify(historyData));
+  toast('Saved to history!');
+ }catch(e){toast('Could not save this item.')}
 });
+
 function renderHistory(){
  const list=$('historyList');
- if(!historyData.length){list.textContent='No saved content yet.';return}
  list.innerHTML='';
- historyData.forEach((item,index)=>{
-  const div=document.createElement('div');
-  div.className='history-item';
+ if(!historyData.length){list.textContent='No saved content yet.';return}
+ historyData.forEach(item=>{
+  const row=document.createElement('div');
+  row.className='history-item';
   const info=document.createElement('div');
-  const strong=document.createElement('strong');
-  strong.textContent=item.tool+' — '+item.topic;
-  const small=document.createElement('div');
-  small.textContent=item.result.slice(0,100)+'...';
-  small.style.color='#9298b5';small.style.marginTop='6px';
-  info.append(strong,small);
-  const button=document.createElement('button');
-  button.className='secondary';button.textContent='Copy';
-  button.onclick=()=>navigator.clipboard.writeText(item.result).then(()=>toast('Copied!'));
-  div.append(info,button);list.append(div);
+  const title=document.createElement('strong');
+  title.textContent=(item.tool||'Content')+' — '+(item.topic||'Untitled');
+  const preview=document.createElement('div');
+  preview.textContent=(item.result||'').slice(0,120)+'...';
+  preview.style.color='#9299b8';
+  preview.style.marginTop='6px';
+  info.append(title,preview);
+  const btn=document.createElement('button');
+  btn.className='secondary';
+  btn.textContent='Copy';
+  btn.addEventListener('click',()=>copyText(item.result));
+  row.append(info,btn);
+  list.append(row);
  });
 }
+
 function clearHistory(){
  if(!confirm('Delete all saved content?'))return;
- historyData=[];localStorage.removeItem('clipforge_history');renderHistory();
-}
-function toast(message){
- $('toast').textContent=message;$('toast').classList.add('show');
- setTimeout(()=>$('toast').classList.remove('show'),2200);
+ historyData=[];
+ localStorage.removeItem('clipforge_history');
+ renderHistory();
+ toast('History cleared.');
 }
 </script>
 </body>
