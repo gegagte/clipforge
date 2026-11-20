@@ -3,514 +3,256 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090914">
-<title>ClipForge — AI Creator Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ClipForge — Creator Studio</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
-:root{
-  --bg:#090914;--panel:#121225;--panel2:#191932;
-  --purple:#8b5cf6;--blue:#4f8cff;--pink:#d946ef;
-  --text:#f5f3ff;--muted:#9695b4;--border:#292846;
-  --gradient:linear-gradient(110deg,#8b5cf6,#4f8cff,#d946ef);
-}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif}
+body{margin:0;background:#0b0914;color:#f5f2ff;font-family:Arial,sans-serif}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
-#loader{position:fixed;inset:0;background:#090914;z-index:99;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;transition:.5s}
-.logo{font-family:'Space Grotesk';font-size:27px;font-weight:800;letter-spacing:-1px}
-.logo span{background:var(--gradient);background-clip:text;color:transparent}
-.loaderbar{height:4px;width:180px;background:#25233d;border-radius:10px;overflow:hidden}
-.loaderbar:after{content:"";display:block;height:100%;width:40%;background:var(--gradient);animation:load 1.2s infinite}
-@keyframes load{from{transform:translateX(-100%)}to{transform:translateX(260%)}}
-.app{display:none;min-height:100vh}
-.sidebar{position:fixed;top:0;bottom:0;left:0;width:245px;background:#0d0d1b;border-right:1px solid var(--border);padding:25px 16px;z-index:5;overflow-y:auto}
-.brand{padding:0 12px 30px}
-.brand small{display:block;color:var(--muted);font-size:11px;margin-top:5px;letter-spacing:2px}
-.navlabel{color:#777692;font-size:10px;font-weight:800;letter-spacing:1.5px;padding:17px 12px 8px}
-.navbtn{width:100%;border:0;background:transparent;color:#aaa9c4;padding:12px;border-radius:11px;text-align:left;display:flex;align-items:center;gap:12px;margin:3px 0;font-size:13px}
-.navbtn:hover,.navbtn.active{background:#22203d;color:white}
-.navbtn.active{box-shadow:inset 3px 0 var(--purple)}
-.navicon{width:20px;text-align:center;font-size:16px}
-.sidebar-bottom{margin-top:35px;border:1px solid var(--border);background:var(--panel);padding:14px;border-radius:14px}
-.sidebar-bottom p{font-size:12px;color:var(--muted);line-height:1.5}
-.main{margin-left:245px;padding:25px 35px;max-width:1700px}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:30px}
-.search{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:11px 15px;color:white;width:min(350px,50%)}
-.avatar{width:38px;height:38px;border-radius:12px;background:var(--gradient);display:grid;place-items:center;font-weight:800}
-.topright{display:flex;align-items:center;gap:14px}
-.page{display:none;animation:appear .25s ease}
-.page.active{display:block}
-@keyframes appear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
-h1,h2,h3{font-family:'Space Grotesk';margin:0}
-h1{font-size:clamp(27px,4vw,38px);letter-spacing:-1.5px}
-h2{font-size:21px}
-h3{font-size:15px}
-.subtitle{color:var(--muted);font-size:14px;margin-top:9px;line-height:1.6}
-.gradient-text{background:var(--gradient);background-clip:text;color:transparent}
-.hero{background:linear-gradient(120deg,#20183e,#172044 60%,#29183d);border:1px solid #403365;border-radius:20px;padding:30px;position:relative;overflow:hidden;margin-bottom:23px}
-.hero:after{content:"✦";position:absolute;right:8%;top:-35px;font-size:190px;color:#ffffff09}
-.hero p{color:#c0bce0;max-width:570px;line-height:1.7;font-size:14px}
-.btn{border:0;border-radius:10px;padding:12px 17px;font-weight:700;font-size:13px;color:white;background:var(--gradient)}
-.btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
-.btn.secondary{background:#24233e;border:1px solid var(--border)}
-.btn.ghost{background:transparent;border:1px solid var(--border);color:#ccc}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
-.stat,.card{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:19px}
-.stat .number{font-family:'Space Grotesk';font-size:27px;font-weight:700;margin:12px 0 5px}
-.muted{color:var(--muted);font-size:12px}
-.staticon{width:36px;height:36px;border-radius:10px;background:#282047;display:grid;place-items:center}
-.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:28px 0 15px}
-.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.tool{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:19px;cursor:pointer;transition:.2s}
-.tool:hover{border-color:var(--purple);transform:translateY(-3px)}
-.tool .emoji{font-size:25px;margin-bottom:15px}
-.tool p{color:var(--muted);font-size:12px;line-height:1.5}
-.tool h3{margin-bottom:8px}
-.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.field{margin:14px 0}
-.field label{display:block;color:#c7c4dd;font-size:12px;font-weight:700;margin-bottom:8px}
-.field input,.field textarea,.field select,.searchinput{width:100%;background:#0c0c1a;border:1px solid var(--border);color:white;border-radius:10px;padding:12px;outline:none}
-.field textarea{min-height:130px;resize:vertical;line-height:1.6}
-.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--purple)}
-.output{background:#0b0b19;border:1px solid var(--border);border-radius:12px;padding:16px;min-height:100px;white-space:pre-wrap;color:#ddd9f3;line-height:1.7;font-size:13px;margin-top:15px}
-.empty{padding:35px 15px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:13px}
-.video-preview{aspect-ratio:16/9;background:radial-gradient(circle at 50% 40%,#30205c,#111126 60%,#080812);border:1px solid #393153;border-radius:15px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;position:relative}
-.video-preview video{width:100%;height:100%;object-fit:contain}
-.preview-content{padding:20px}
-.preview-content .play{font-size:42px;margin-bottom:12px}
-.tag{display:inline-block;border:1px solid #393252;background:#211b38;color:#c5b3ff;padding:5px 9px;border-radius:7px;font-size:10px;margin:3px}
-.notice{background:#201a36;border:1px solid #4a3678;padding:13px;border-radius:11px;color:#c8b9f5;font-size:12px;line-height:1.6;margin:15px 0}
-.plannerrow{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border);gap:10px}
-.thumbnail{aspect-ratio:16/9;border-radius:12px;background:linear-gradient(135deg,#221443,#16304b);display:grid;place-items:center;font-family:'Space Grotesk';font-size:22px;font-weight:800;text-align:center;padding:15px}
-.mobilemenu{display:none}
-.toast{position:fixed;bottom:20px;right:20px;background:#24213c;border:1px solid #55418c;padding:13px 18px;border-radius:10px;z-index:120;font-size:13px;box-shadow:0 10px 40px #0008}
-@media(max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)}.tools{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:760px){
- .sidebar{transform:translateX(-105%);transition:.25s;width:260px;box-shadow:20px 0 50px #0008}
- .sidebar.open{transform:translateX(0)}
- .main{margin:0;padding:17px 15px}
- .mobilemenu{display:inline-flex}
- .topbar{margin-bottom:22px}
- .search{width:100%;max-width:210px}
- .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
- .stat{padding:13px}.stat .number{font-size:22px}
- .tools{grid-template-columns:1fr}
- .formgrid{grid-template-columns:1fr}
- .hero{padding:22px}
- .sectionhead{margin-top:22px}
+.app{min-height:100vh}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:230px;background:#110e1e;padding:24px 15px;border-right:1px solid #29243c}
+.logo{font-size:23px;font-weight:900;margin:5px 10px 35px}
+.logo span{color:#a477ff}
+.group{color:#817990;font-size:10px;letter-spacing:2px;margin:22px 10px 8px}
+.nav{width:100%;text-align:left;padding:13px;border:0;border-radius:9px;background:transparent;color:#aaa3bc;margin:3px 0}
+.nav.active,.nav:hover{background:#28203c;color:white}
+main{margin-left:230px;padding:28px;max-width:1500px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px}
+h1{font-size:27px;margin:0 0 7px}
+h2{font-size:17px;margin:0 0 15px}
+.muted{color:#9991aa;font-size:13px}
+.demo{font-size:10px;background:#302343;color:#d6baff;border:1px solid #674a91;padding:8px 11px;border-radius:8px}
+.page{display:none}.page.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.card{background:#151222;border:1px solid #2b2540;border-radius:14px;padding:19px;min-width:0}
+.statlabel{font-size:12px;color:#9991aa}
+.statvalue{font-size:25px;font-weight:800;margin:13px 0}
+.green{color:#40dca2;font-size:12px}
+.section{margin-top:18px}
+.chart{height:250px;width:100%;display:block}
+.chartcard{height:320px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+select,input,textarea{background:#211c32;color:white;border:1px solid #39314e;border-radius:8px;padding:11px;max-width:100%}
+.primary{background:linear-gradient(100deg,#8856ec,#547bfa);color:white;border:0;border-radius:8px;padding:12px 17px;font-weight:bold}
+.secondary{background:#28213a;color:white;border:1px solid #403552;padding:10px 13px;border-radius:8px}
+.platform{padding:13px 0;border-bottom:1px solid #302a40;display:flex;justify-content:space-between;font-size:13px}
+.bar{height:6px;background:#302a40;border-radius:9px;margin:9px 0}
+.bar span{display:block;height:100%;background:#9a72ff;border-radius:9px}
+table{width:100%;border-collapse:collapse;min-width:500px}
+th,td{text-align:left;padding:14px 9px;border-bottom:1px solid #302a40;font-size:12px}
+th{color:#9a91aa}
+.tablewrap{overflow-x:auto}
+.status{background:#1a382e;color:#62e4b0;padding:5px 9px;border-radius:15px;font-size:10px}
+.bigmoney{font-size:42px;font-weight:900;margin:12px 0}
+textarea{width:100%;min-height:130px;margin:12px 0}
+footer{text-align:center;color:#6f687d;padding:35px;font-size:10px}
+.avatar{background:#7549d5;width:39px;height:39px;border-radius:11px;display:grid;place-items:center;font-weight:bold}
+@media(max-width:950px){
+.sidebar{width:70px;padding:15px 7px}
+.logo{font-size:0;text-align:center;margin:10px 0 25px}
+.logo:after{content:"CF";font-size:20px}
+.group{display:none}
+.nav{font-size:0;text-align:center;padding:15px 3px}
+.nav .ico{font-size:18px}
+main{margin-left:70px;padding:18px}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:560px){
+main{padding:13px}
+.grid{gap:9px}
+.card{padding:13px}
+.statvalue{font-size:20px}
+h1{font-size:22px}
+.chartcard{height:290px}
+header{align-items:flex-start}
+.demo{font-size:9px;padding:7px}
 }
 </style>
 </head>
 <body>
-
-<div id="loader">
+<div class="app">
+<aside class="sidebar">
  <div class="logo">CLIP<span>FORGE</span></div>
- <div class="loaderbar"></div>
- <small style="color:#9996b8">Preparing your creator studio...</small>
-</div>
-
-<div class="app" id="app">
-<aside class="sidebar" id="sidebar">
- <div class="brand">
-  <div class="logo">CLIP<span>FORGE</span></div>
-  <small>AI CREATOR STUDIO</small>
- </div>
- <div class="navlabel">WORKSPACE</div>
- <button class="navbtn active" data-page="dashboard"><span class="navicon">◈</span>Dashboard</button>
- <button class="navbtn" data-page="video"><span class="navicon">▶</span>AI Video Generator <span class="tag">NEW</span></button>
- <button class="navbtn" data-page="script"><span class="navicon">✎</span>Script Studio</button>
- <button class="navbtn" data-page="hooks"><span class="navicon">⚡</span>Hook Generator</button>
- <button class="navbtn" data-page="captions"><span class="navicon">Aa</span>Captions & Titles</button>
- <button class="navbtn" data-page="hashtags"><span class="navicon">#</span>Hashtag Studio</button>
- <button class="navbtn" data-page="ideas"><span class="navicon">✦</span>Idea Generator</button>
- <div class="navlabel">MANAGEMENT</div>
- <button class="navbtn" data-page="planner"><span class="navicon">▦</span>Content Planner</button>
- <button class="navbtn" data-page="thumbnail"><span class="navicon">▣</span>Thumbnail Studio</button>
- <button class="navbtn" data-page="saved"><span class="navicon">♡</span>Saved Content</button>
- <button class="navbtn" data-page="settings"><span class="navicon">⚙</span>Settings</button>
- <div class="sidebar-bottom">
-  <strong style="font-size:13px">✦ Creator plan</strong>
-  <p>Your creative workspace, all in one place.</p>
-  <span class="tag">FREE WORKSPACE</span>
- </div>
+ <div class="group">WORKSPACE</div>
+ <button class="nav active" data-page="dashboard"><span class="ico">◈</span> Dashboard</button>
+ <button class="nav" data-page="earnings"><span class="ico">💰</span> Earnings</button>
+ <button class="nav" data-page="analytics"><span class="ico">📊</span> Analytics</button>
+ <div class="group">CREATION</div>
+ <button class="nav" data-page="tools"><span class="ico">✦</span> AI Tools</button>
+ <button class="nav" data-page="videos"><span class="ico">🎬</span> My Videos</button>
+ <div class="group">ACCOUNT</div>
+ <button class="nav" data-page="settings"><span class="ico">⚙</span> Settings</button>
 </aside>
 
-<main class="main">
- <header class="topbar">
-  <div style="display:flex;align-items:center;gap:12px;flex:1">
-   <button class="btn secondary mobilemenu" id="menuBtn">☰</button>
-   <input class="search" id="globalSearch" placeholder="⌕  Search your workspace...">
-  </div>
-  <div class="topright"><span class="muted">Creator</span><div class="avatar">C</div></div>
- </header>
+<main>
+<header>
+ <div><h1 id="title">Dashboard</h1><div class="muted">Your creator workspace</div></div>
+ <div class="row"><span class="demo">DEMO · FAKE DATA</span><div class="avatar" id="avatar">A</div></div>
+</header>
 
- <section class="page active" id="page-dashboard">
-  <div class="hero">
-   <span class="tag">✦ YOUR CREATIVE WORKSPACE</span>
-   <h1 style="margin-top:16px">Create more.<br><span class="gradient-text">Create better.</span></h1>
-   <p>Turn your ideas into content. Generate scripts, hooks, captions and video concepts from one powerful creator studio.</p>
-   <button class="btn" onclick="showPage('video')">▶ Create an AI video</button>
+<section class="page active" id="dashboard">
+ <div class="grid">
+  <div class="card"><div class="statlabel">Demo earnings</div><div class="statvalue money">€8,450.75</div><div class="green">↑ 24.8% · Simulation</div></div>
+  <div class="card"><div class="statlabel">Total views</div><div class="statvalue">1.28M</div><div class="green">↑ 18.2% · Simulation</div></div>
+  <div class="card"><div class="statlabel">Followers gained</div><div class="statvalue">+12,840</div><div class="green">↑ 31.4% · Simulation</div></div>
+  <div class="card"><div class="statlabel">Videos published</div><div class="statvalue">86</div><div class="green">+12 this month · Demo</div></div>
+ </div>
+ <div class="card chartcard section">
+  <div class="row"><h2>Revenue overview</h2><select id="period"><option value="30">Last 30 days</option><option value="7">Last 7 days</option><option value="12">Last 12 months</option></select></div>
+  <canvas id="revenueChart" class="chart"></canvas>
+ </div>
+ <div class="grid section" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+  <div class="card"><h2>Top platforms</h2>
+   <div class="platform"><span>TikTok</span><b>€3,820</b></div><div class="bar"><span style="width:85%"></span></div>
+   <div class="platform"><span>YouTube</span><b>€2,950</b></div><div class="bar"><span style="width:65%"></span></div>
+   <div class="platform"><span>Instagram</span><b>€1,680</b></div><div class="bar"><span style="width:42%"></span></div>
   </div>
-  <div class="grid">
-   <div class="stat"><div class="staticon">✎</div><div class="number" id="savedCount">0</div><div class="muted">Saved creations</div></div>
-   <div class="stat"><div class="staticon">▶</div><div class="number" id="videoCount">0</div><div class="muted">Generated videos</div></div>
-   <div class="stat"><div class="staticon">✦</div><div class="number" id="ideaCount">0</div><div class="muted">Ideas created</div></div>
-   <div class="stat"><div class="staticon">▦</div><div class="number" id="plannerCount">0</div><div class="muted">Planner entries</div></div>
+  <div class="card"><h2>Recent activity</h2>
+   <div class="platform"><span>New video published</span><span class="muted">2h ago</span></div>
+   <div class="platform"><span>Views milestone</span><span class="muted">5h ago</span></div>
+   <div class="platform"><span>Weekly report</span><span class="muted">Yesterday</span></div>
   </div>
-  <div class="sectionhead"><h2>Creative tools</h2><span class="muted">Your studio</span></div>
-  <div class="tools">
-   <div class="tool" onclick="showPage('video')"><div class="emoji">🎬</div><h3>AI Video Generator</h3><p>Describe your vision and prepare a video generation request.</p></div>
-   <div class="tool" onclick="showPage('script')"><div class="emoji">📝</div><h3>Script Studio</h3><p>Build scripts for TikTok, Reels and YouTube.</p></div>
-   <div class="tool" onclick="showPage('hooks')"><div class="emoji">⚡</div><h3>Hook Generator</h3><p>Create attention-grabbing opening lines.</p></div>
-   <div class="tool" onclick="showPage('captions')"><div class="emoji">💬</div><h3>Captions & Titles</h3><p>Find the right words for your content.</p></div>
-   <div class="tool" onclick="showPage('hashtags')"><div class="emoji">#️⃣</div><h3>Hashtag Studio</h3><p>Generate relevant hashtag suggestions.</p></div>
-   <div class="tool" onclick="showPage('ideas')"><div class="emoji">💡</div><h3>Idea Generator</h3><p>Discover your next content concept.</p></div>
-  </div>
-  <div class="sectionhead"><h2>Recent creations</h2><button class="btn secondary" onclick="showPage('saved')">View all</button></div>
-  <div id="recentList" class="empty">Your creations will appear here.</div>
- </section>
+ </div>
+</section>
 
- <section class="page" id="page-video">
-  <span class="tag">✦ CLIPFORGE AI</span>
-  <h1 style="margin-top:13px">AI Video <span class="gradient-text">Generator</span></h1>
-  <p class="subtitle">Describe the video you imagine. Configure your preferences and prepare your generation.</p>
-  <div class="notice">ⓘ Real AI video generation requires a connected video-generation API. This interface is ready for integration, but it does not generate a real video until a provider is connected.</div>
-  <div class="formgrid">
-   <div class="card">
-    <h3>01 — Describe your video</h3>
-    <div class="field">
-     <label>Your creative prompt</label>
-     <textarea id="videoPrompt" placeholder="Example: A cinematic drone shot over a futuristic city at night, purple neon lights, flying cars, rain reflections, ultra realistic..."></textarea>
-    </div>
-    <div class="field">
-     <label>Visual style</label>
-     <select id="videoStyle">
-      <option>Cinematic</option><option>Realistic</option><option>Anime</option><option>3D Animation</option><option>Documentary</option><option>Commercial</option><option>Fantasy</option><option>Minimalist</option>
-     </select>
-    </div>
-    <div class="field">
-     <label>Aspect ratio</label>
-     <select id="videoRatio"><option value="9:16">9:16 — TikTok / Reels</option><option value="16:9">16:9 — YouTube</option><option value="1:1">1:1 — Square</option><option value="4:5">4:5 — Instagram</option></select>
-    </div>
-    <div class="formgrid">
-     <div class="field"><label>Duration</label><select id="videoDuration"><option>5 seconds</option><option>10 seconds</option><option>15 seconds</option><option>30 seconds</option><option>60 seconds</option></select></div>
-     <div class="field"><label>Quality</label><select id="videoQuality"><option>720p</option><option>1080p</option><option>4K</option></select></div>
-    </div>
-    <button class="btn" style="width:100%" id="generateVideo">✦ Prepare video generation</button>
-    <button class="btn secondary" style="width:100%;margin-top:9px" id="examplePrompt">Try an example prompt</button>
-   </div>
-   <div class="card">
-    <h3>02 — Video preview</h3>
-    <div class="video-preview" id="videoPreview" style="margin-top:15px">
-     <div class="preview-content"><div class="play">▶</div><strong>Your video will appear here</strong><p class="muted">Write a prompt to get started</p></div>
-    </div>
-    <div class="sectionhead"><h3>Generation settings</h3></div>
-    <div id="videoSettings" class="muted">No generation prepared yet.</div>
-    <div id="videoResult" style="margin-top:15px"></div>
-   </div>
-  </div>
-  <div class="sectionhead"><h2>Video generation history</h2></div>
-  <div id="videoHistory" class="empty">Your prepared video requests will appear here.</div>
- </section>
+<section class="page" id="earnings">
+ <div class="card"><div class="muted">TOTAL SIMULATED REVENUE</div><div class="bigmoney money">€8,450.75</div><div class="green">↑ 24.8% · Fictional data</div></div>
+ <div class="grid section">
+  <div class="card"><div class="statlabel">Available balance · demo</div><div class="statvalue">€2,840.20</div></div>
+  <div class="card"><div class="statlabel">Pending · demo</div><div class="statvalue">€1,250.00</div></div>
+  <div class="card"><div class="statlabel">This month · demo</div><div class="statvalue">€3,210.40</div></div>
+  <div class="card"><div class="statlabel">Last month · demo</div><div class="statvalue">€2,580.15</div></div>
+ </div>
+ <div class="card section"><div class="row"><h2>Simulated transactions</h2><span class="demo">NOT REAL PAYMENTS</span></div>
+  <div class="tablewrap"><table><thead><tr><th>DESCRIPTION</th><th>DATE</th><th>PLATFORM</th><th>AMOUNT</th><th>STATUS</th></tr></thead><tbody>
+  <tr><td>Creator revenue</td><td>Nov 19</td><td>TikTok</td><td>€420.50</td><td><span class="status">DEMO</span></td></tr>
+  <tr><td>Video monetization</td><td>Nov 17</td><td>YouTube</td><td>€285.00</td><td><span class="status">DEMO</span></td></tr>
+  <tr><td>Creator rewards</td><td>Nov 15</td><td>Instagram</td><td>€190.20</td><td><span class="status">DEMO</span></td></tr>
+  <tr><td>Creator revenue</td><td>Nov 12</td><td>TikTok</td><td>€350.00</td><td><span class="status">DEMO</span></td></tr>
+  </tbody></table></div>
+ </div>
+</section>
 
- <section class="page" id="page-script">
-  <h1>Script <span class="gradient-text">Studio</span></h1>
-  <p class="subtitle">Turn a simple idea into a structured video script.</p>
-  <div class="card" style="margin-top:20px">
-   <div class="field"><label>Video topic</label><textarea id="scriptTopic" placeholder="What is your video about?"></textarea></div>
-   <div class="formgrid">
-    <div class="field"><label>Platform</label><select id="scriptPlatform"><option>TikTok</option><option>YouTube Shorts</option><option>Instagram Reels</option><option>YouTube</option></select></div>
-    <div class="field"><label>Tone</label><select id="scriptTone"><option>Engaging</option><option>Funny</option><option>Educational</option><option>Professional</option><option>Storytelling</option></select></div>
-   </div>
-   <button class="btn" onclick="makeScript()">✦ Generate script</button>
-   <div class="output" id="scriptOutput">Your script will appear here.</div>
-   <button class="btn secondary" onclick="saveText('Script',getText('scriptOutput'))">♡ Save script</button>
-   <button class="btn ghost" onclick="copyText(getText('scriptOutput'))">Copy</button>
-  </div>
- </section>
+<section class="page" id="analytics">
+ <div class="grid">
+  <div class="card"><div class="statlabel">Impressions · demo</div><div class="statvalue">2.4M</div></div>
+  <div class="card"><div class="statlabel">Engagement · demo</div><div class="statvalue">8.7%</div></div>
+  <div class="card"><div class="statlabel">Average watch · demo</div><div class="statvalue">24.8s</div></div>
+  <div class="card"><div class="statlabel">Click-through · demo</div><div class="statvalue">5.2%</div></div>
+ </div>
+ <div class="card section"><h2>Audience growth</h2><canvas id="viewsChart" class="chart"></canvas></div>
+</section>
 
- <section class="page" id="page-hooks">
-  <h1>Hook <span class="gradient-text">Generator</span></h1>
-  <p class="subtitle">Create strong opening lines to introduce your videos.</p>
-  <div class="card" style="margin-top:20px">
-   <div class="field"><label>Your topic</label><input id="hookTopic" placeholder="Example: 5 habits that changed my life"></div>
-   <div class="field"><label>Style</label><select id="hookStyle"><option>Curiosity</option><option>Surprising fact</option><option>Storytelling</option><option>Direct question</option><option>Bold statement</option></select></div>
-   <button class="btn" onclick="makeHooks()">Generate hooks</button>
-   <div class="output" id="hookOutput">Your hooks will appear here.</div>
-   <button class="btn secondary" onclick="saveText('Hooks',getText('hookOutput'))">♡ Save</button>
-   <button class="btn ghost" onclick="copyText(getText('hookOutput'))">Copy</button>
-  </div>
- </section>
+<section class="page" id="tools">
+ <div class="card"><h2>AI Script Generator</h2><p class="muted">Create a script template for your next video.</p>
+ <textarea id="idea" placeholder="Describe your video idea..."></textarea>
+ <button class="primary" id="generate">Generate script</button>
+ <div class="card section"><h2>Result</h2><p id="result" class="muted">Your script will appear here.</p></div>
+ <p class="muted">Local demo template. No real AI API is connected.</p></div>
+</section>
 
- <section class="page" id="page-captions">
-  <h1>Captions & <span class="gradient-text">Titles</span></h1>
-  <p class="subtitle">Find a title and caption that fit your content.</p>
-  <div class="card" style="margin-top:20px">
-   <div class="field"><label>Describe your video</label><textarea id="captionTopic" placeholder="Describe what happens in your video..."></textarea></div>
-   <div class="field"><label>Platform</label><select id="captionPlatform"><option>TikTok</option><option>Instagram</option><option>YouTube</option></select></div>
-   <button class="btn" onclick="makeCaptions()">Generate captions</button>
-   <div class="output" id="captionOutput">Your captions and titles will appear here.</div>
-   <button class="btn secondary" onclick="saveText('Captions',getText('captionOutput'))">♡ Save</button>
-   <button class="btn ghost" onclick="copyText(getText('captionOutput'))">Copy</button>
-  </div>
- </section>
+<section class="page" id="videos">
+ <div class="grid">
+  <div class="card"><div class="statvalue">🎬</div><b>Why nobody talks about this</b><p class="muted">245K views · Demo</p></div>
+  <div class="card"><div class="statvalue">🎬</div><b>3 secrets about success</b><p class="muted">182K views · Demo</p></div>
+  <div class="card"><div class="statvalue">🎬</div><b>This changes everything</b><p class="muted">96K views · Demo</p></div>
+  <div class="card"><div class="statvalue">🎬</div><b>Things you didn't know</b><p class="muted">71K views · Demo</p></div>
+ </div>
+</section>
 
- <section class="page" id="page-hashtags">
-  <h1>Hashtag <span class="gradient-text">Studio</span></h1>
-  <p class="subtitle">Build a set of hashtags related to your topic.</p>
-  <div class="card" style="margin-top:20px">
-   <div class="field"><label>Content topic</label><input id="hashtagTopic" placeholder="Example: football training"></div>
-   <div class="field"><label>Platform</label><select id="hashtagPlatform"><option>TikTok</option><option>Instagram</option><option>YouTube</option></select></div>
-   <button class="btn" onclick="makeHashtags()">Generate hashtags</button>
-   <div class="output" id="hashtagOutput">Your hashtags will appear here.</div>
-   <button class="btn secondary" onclick="copyText(getText('hashtagOutput'))">Copy hashtags</button>
-   <p class="muted">Suggestions are generated from templates, not live trend statistics.</p>
-  </div>
- </section>
+<section class="page" id="settings">
+ <div class="card"><h2>Demo settings</h2>
+ <p class="muted">Change the fictional statistics displayed in this workspace.</p>
+ <label>Creator name</label><br><input id="creator" value="Adam" style="margin:10px 0 20px">
+ <br><label>Demo earnings</label><br>
+ <select id="amount" style="margin:10px 0 20px">
+ <option value="8450.75">€8,450.75</option><option value="12500">€12,500.00</option><option value="24850.5">€24,850.50</option><option value="99999.99">€99,999.99</option>
+ </select><br>
+ <button class="primary" id="save">Save settings</button>
+ <p class="muted">All numbers are fictional and are not connected to payment services.</p>
+ </div>
+</section>
 
- <section class="page" id="page-ideas">
-  <h1>Content <span class="gradient-text">Ideas</span></h1>
-  <p class="subtitle">Find inspiration for your next creation.</p>
-  <div class="card" style="margin-top:20px">
-   <div class="field"><label>Your niche</label><input id="ideaTopic" placeholder="Example: gaming, sport, lifestyle..."></div>
-   <button class="btn" onclick="makeIdeas()">✦ Generate ideas</button>
-   <div class="output" id="ideaOutput">Your ideas will appear here.</div>
-   <button class="btn secondary" onclick="saveText('Ideas',getText('ideaOutput'))">♡ Save ideas</button>
-   <button class="btn ghost" onclick="copyText(getText('ideaOutput'))">Copy</button>
-  </div>
- </section>
-
- <section class="page" id="page-planner">
-  <h1>Content <span class="gradient-text">Planner</span></h1>
-  <p class="subtitle">Organize your publishing schedule.</p>
-  <div class="card" style="margin-top:20px">
-   <div class="formgrid">
-    <div class="field"><label>Content title</label><input id="planTitle" placeholder="My next video"></div>
-    <div class="field"><label>Publication date</label><input id="planDate" type="date"></div>
-   </div>
-   <div class="formgrid">
-    <div class="field"><label>Platform</label><select id="planPlatform"><option>TikTok</option><option>Instagram</option><option>YouTube</option></select></div>
-    <div class="field"><label>Status</label><select id="planStatus"><option>Idea</option><option>In progress</option><option>Ready</option><option>Published</option></select></div>
-   </div>
-   <button class="btn" onclick="addPlan()">+ Add to planner</button>
-  </div>
-  <div class="sectionhead"><h2>Your schedule</h2></div>
-  <div class="card" id="plannerList"></div>
- </section>
-
- <section class="page" id="page-thumbnail">
-  <h1>Thumbnail <span class="gradient-text">Studio</span></h1>
-  <p class="subtitle">Create a simple thumbnail and export it as an image.</p>
-  <div class="formgrid" style="margin-top:20px">
-   <div class="card">
-    <div class="field"><label>Main text</label><input id="thumbText" maxlength="45" placeholder="YOUR BIG IDEA"></div>
-    <div class="field"><label>Subtitle</label><input id="thumbSub" maxlength="65" placeholder="A new video is here"></div>
-    <div class="field"><label>Background color</label><input id="thumbColor" type="color" value="#41218c" style="height:45px"></div>
-    <button class="btn" onclick="drawThumb()">Update thumbnail</button>
-    <button class="btn secondary" onclick="downloadThumb()">Download PNG</button>
-   </div>
-   <div class="card"><div class="thumbnail" id="thumbPreview">YOUR BIG IDEA</div></div>
-  </div>
- </section>
-
- <section class="page" id="page-saved">
-  <h1>Saved <span class="gradient-text">Content</span></h1>
-  <p class="subtitle">Your saved creations, stored in this browser.</p>
-  <div id="savedList" style="margin-top:20px"></div>
- </section>
-
- <section class="page" id="page-settings">
-  <h1>Studio <span class="gradient-text">Settings</span></h1>
-  <p class="subtitle">Manage your workspace preferences.</p>
-  <div class="card" style="margin-top:20px">
-   <h3>Workspace</h3>
-   <div class="field"><label>Creator name</label><input id="creatorName" placeholder="Creator"></div>
-   <button class="btn" onclick="saveSettings()">Save settings</button>
-   <div class="sectionhead"><h3>Storage</h3></div>
-   <p class="muted">Your creations and planner entries are stored locally in this browser using localStorage.</p>
-   <button class="btn secondary" onclick="exportData()">Export my data</button>
-   <button class="btn ghost" onclick="clearData()">Clear local data</button>
-  </div>
-  <div class="notice">ClipForge currently runs as a front-end prototype. Real AI generation, accounts, cloud storage and payment features require backend services and API connections.</div>
- </section>
+<footer>CLIPFORGE · CREATOR STUDIO · DEMONSTRATION ONLY · FICTIONAL STATISTICS</footer>
 </main>
 </div>
 
-<div id="toast" class="toast" style="display:none"></div>
-
 <script>
-const $=id=>document.getElementById(id);
-const read=(key,fallback=[])=>{try{return JSON.parse(localStorage.getItem('cf_'+key))??fallback}catch{return fallback}};
-const write=(key,value)=>localStorage.setItem('cf_'+key,JSON.stringify(value));
-let saved=read('saved'),plans=read('plans'),videos=read('videos'),ideas=read('ideas');
-
-function toast(message){
- const t=$('toast');t.textContent=message;t.style.display='block';
- clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display='none',2600);
-}
-function showPage(name){
- document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
- $('page-'+name).classList.add('active');
- $('sidebar').classList.remove('open');
- if(name==='saved')renderSaved();
- if(name==='planner')renderPlans();
- if(name==='video')renderVideoHistory();
- window.scrollTo(0,0);
-}
-document.querySelectorAll('.navbtn').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
-$('menuBtn').onclick=()=>$('sidebar').classList.toggle('open');
-function getText(id){return $(id).textContent}
-function copyText(text){
- if(!text||text.includes('will appear here'))return toast('Nothing to copy yet.');
- navigator.clipboard?.writeText(text).then(()=>toast('Copied!')).catch(()=>toast('Copy not available.'));
-}
-function saveText(type,content){
- if(!content||content.includes('will appear here'))return toast('Generate content first.');
- saved.unshift({id:Date.now(),type,content,date:new Date().toLocaleString()});
- write('saved',saved);updateStats();toast('Saved to your library!');
-}
-function makeScript(){
- const topic=$('scriptTopic').value.trim();if(!topic)return toast('Enter a topic first.');
- const platform=$('scriptPlatform').value,tone=$('scriptTone').value;
- $('scriptOutput').textContent=`${platform.toUpperCase()} SCRIPT — ${tone.toUpperCase()}
-
-HOOK (0–3s)
-"Stop scrolling! Here's something you need to know about ${topic}."
-
-INTRODUCTION
-"Today, we're talking about ${topic}. Let's get straight into it."
-
-MAIN CONTENT
-1. Introduce the key idea.
-2. Explain why it matters.
-3. Give a practical example.
-4. Share one useful takeaway.
-
-ENDING
-"Which part did you find most useful? Let me know in the comments!"
-
-NOTE: This is a starter script template. Customize the details to your subject.`;
-}
-function makeHooks(){
- const t=$('hookTopic').value.trim();if(!t)return toast('Enter a topic first.');
- const styles={
- 'Curiosity':[`Nobody tells you this about ${t}...`,`What if everything you knew about ${t} was wrong?`,`The secret behind ${t} is simpler than you think.`],
- 'Surprising fact':[`This one detail about ${t} might surprise you.`,`Most people overlook this when it comes to ${t}.`,`Here's something unexpected about ${t}.`],
- 'Storytelling':[`I never expected this to happen with ${t}...`,`Let me tell you how ${t} changed everything.`,`It all started with one simple idea: ${t}.`],
- 'Direct question':[`Are you making this mistake with ${t}?`,`Have you ever wondered why ${t} works this way?`,`Want to understand ${t} in less than a minute?`],
- 'Bold statement':[`You're approaching ${t} the wrong way.`,`This changes how you should think about ${t}.`,`It's time to rethink everything about ${t}.`]
- };
- $('hookOutput').textContent=styles[$('hookStyle').value].map((x,i)=>(i+1)+'. '+x).join('\n\n');
-}
-function makeCaptions(){
- const t=$('captionTopic').value.trim();if(!t)return toast('Describe your video first.');
- $('captionOutput').textContent=`TITLE IDEAS\n1. Everything you need to know about ${t}\n2. You need to see this!\n3. A different perspective on ${t}\n\nCAPTION IDEAS\n✨ Let's talk about ${t}.\n💡 Here's something worth sharing.\n🚀 Save this for later and share your thoughts!\n\nPLATFORM: ${$('captionPlatform').value}\n\nCustomize these suggestions to match your actual video.`;
-}
-function makeHashtags(){
- const t=$('hashtagTopic').value.trim();if(!t)return toast('Enter a topic first.');
- const clean=t.toLowerCase().replace(/[^a-z0-9à-ÿ ]/gi,'').trim().split(/\s+/).filter(Boolean);
- const tags=[...clean.map(x=>'#'+x), '#contentcreator','#fyp','#creatorcommunity','#newvideo','#learnontiktok','#creativecontent'];
- $('hashtagOutput').textContent=[...new Set(tags)].join(' ');
-}
-function makeIdeas(){
- const t=$('ideaTopic').value.trim();if(!t)return toast('Enter your niche first.');
- const list=[
- `A beginner's guide to ${t}`,
- `5 mistakes people make with ${t}`,
- `Things I wish I knew earlier about ${t}`,
- `The truth about ${t}`,
- `Reacting to common myths about ${t}`,
- `A 30-day challenge focused on ${t}`,
- `My personal routine involving ${t}`,
- `Answering the most common questions about ${t}`
- ];
- $('ideaOutput').textContent=list.map((x,i)=>(i+1)+'. '+x).join('\n\n');
- ideas.unshift({topic:t,date:Date.now()});write('ideas',ideas);updateStats();
-}
-$('examplePrompt').onclick=()=>{
- $('videoPrompt').value='A cinematic aerial shot of a futuristic city at night, glowing purple and blue neon lights, flying vehicles, reflective rainy streets, smooth camera movement, highly detailed atmosphere.';
- toast('Example prompt loaded.');
-};
-$('generateVideo').onclick=()=>{
- const prompt=$('videoPrompt').value.trim();if(!prompt)return toast('Write a video prompt first.');
- const item={id:Date.now(),prompt,style:$('videoStyle').value,ratio:$('videoRatio').value,duration:$('videoDuration').value,quality:$('videoQuality').value,date:new Date().toLocaleString()};
- videos.unshift(item);write('videos',videos);updateStats();
- $('videoPreview').innerHTML='<div class="preview-content"><div class="play">✦</div><strong>Generation request prepared</strong><p class="muted">Connect a video API to generate the actual video.</p></div>';
- $('videoSettings').innerHTML=`<span class="tag">${item.style}</span><span class="tag">${item.ratio}</span><span class="tag">${item.duration}</span><span class="tag">${item.quality}</span><p style="line-height:1.6;color:#c7c4dd">${escapeHTML(item.prompt)}</p>`;
- $('videoResult').innerHTML='<div class="notice">Your prompt has been saved. No video has been generated yet: a real generation API and secure backend are needed.</div>';
- renderVideoHistory();toast('Video request prepared!');
-};
-function renderVideoHistory(){
- const el=$('videoHistory');if(!el)return;
- if(!videos.length){el.className='empty';el.textContent='Your prepared video requests will appear here.';return;}
- el.className='card';el.innerHTML=videos.slice(0,8).map(v=>`<div class="plannerrow"><div><strong>${escapeHTML(v.prompt.slice(0,75))}${v.prompt.length>75?'…':''}</strong><p class="muted">${escapeHTML(v.style)} · ${escapeHTML(v.ratio)} · ${escapeHTML(v.duration)} · ${escapeHTML(v.date)}</p></div><span class="tag">Prepared</span></div>`).join('');
-}
-function addPlan(){
- const title=$('planTitle').value.trim(),date=$('planDate').value;
- if(!title||!date)return toast('Enter a title and date.');
- plans.push({id:Date.now(),title,date,platform:$('planPlatform').value,status:$('planStatus').value});
- write('plans',plans);$('planTitle').value='';renderPlans();updateStats();toast('Added to planner!');
-}
-function renderPlans(){
- const el=$('plannerList');if(!plans.length){el.innerHTML='<div class="empty">No planned content yet.</div>';return;}
- el.innerHTML=plans.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(p=>`<div class="plannerrow"><div><strong>${escapeHTML(p.title)}</strong><p class="muted">${escapeHTML(p.date)} · ${escapeHTML(p.platform)} · ${escapeHTML(p.status)}</p></div><button class="btn secondary" onclick="deletePlan(${p.id})">Delete</button></div>`).join('');
-}
-function deletePlan(id){plans=plans.filter(p=>p.id!==id);write('plans',plans);renderPlans();updateStats()}
-function renderSaved(){
- const el=$('savedList');if(!saved.length){el.innerHTML='<div class="empty">No saved content yet. Create something and save it here.</div>';return;}
- el.innerHTML=saved.map(s=>`<div class="card" style="margin-bottom:12px"><div class="plannerrow"><strong>${escapeHTML(s.type)}</strong><button class="btn secondary" onclick="deleteSaved(${s.id})">Delete</button></div><p class="muted">${escapeHTML(s.date)}</p><div class="output">${escapeHTML(s.content)}</div><button class="btn ghost" onclick="copyText(saved.find(x=>x.id===${s.id})?.content||'')">Copy</button></div>`).join('');
-}
-function deleteSaved(id){saved=saved.filter(s=>s.id!==id);write('saved',saved);renderSaved();updateStats()}
-function updateStats(){
- $('savedCount').textContent=saved.length;$('videoCount').textContent=videos.length;
- $('ideaCount').textContent=ideas.length;$('plannerCount').textContent=plans.length;
- const recent=$('recentList');
- if(saved.length){recent.className='card';recent.innerHTML=saved.slice(0,3).map(s=>`<div class="plannerrow"><strong>${escapeHTML(s.type)}</strong><span class="muted">${escapeHTML(s.date)}</span></div>`).join('')}
- else{recent.className='empty';recent.textContent='Your creations will appear here.'}
-}
-function drawThumb(){
- const text=$('thumbText').value.trim()||'YOUR BIG IDEA',sub=$('thumbSub').value.trim();
- $('thumbPreview').style.background=`linear-gradient(135deg,${$('thumbColor').value},#11152f)`;
- $('thumbPreview').innerHTML=`<div><div style="font-size:clamp(20px,4vw,36px)">${escapeHTML(text)}</div><div style="font-size:12px;margin-top:12px;color:#ddd">${escapeHTML(sub)}</div></div>`;
-}
-function downloadThumb(){
- const canvas=document.createElement('canvas');canvas.width=1280;canvas.height=720;
- const ctx=canvas.getContext('2d'),color=$('thumbColor').value;
- const g=ctx.createLinearGradient(0,0,1280,720);g.addColorStop(0,color);g.addColorStop(1,'#10152d');ctx.fillStyle=g;ctx.fillRect(0,0,1280,720);
- ctx.fillStyle='white';ctx.textAlign='center';ctx.font='bold 85px Arial';
- const title=$('thumbText').value||'YOUR BIG IDEA';ctx.fillText(title.slice(0,35),640,340);
- ctx.font='32px Arial';ctx.fillStyle='#ddd';ctx.fillText(($('thumbSub').value||'').slice(0,65),640,410);
- const a=document.createElement('a');a.download='clipforge-thumbnail.png';a.href=canvas.toDataURL('image/png');a.click();
-}
-function saveSettings(){write('creatorName',$('creatorName').value);toast('Settings saved!')}
-function exportData(){
- const data={saved,plans,videos,ideas,creatorName:read('creatorName','')};
- const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
- const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='clipforge-data.json';a.click();URL.revokeObjectURL(a.href);
-}
-function clearData(){
- if(!confirm('Delete all locally saved ClipForge content?'))return;
- ['saved','plans','videos','ideas','creatorName'].forEach(k=>localStorage.removeItem('cf_'+k));
- saved=[];plans=[];videos=[];ideas=[];updateStats();renderSaved();renderPlans();renderVideoHistory();toast('Local content cleared.');
-}
-function escapeHTML(s){
- return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-$('globalSearch').addEventListener('keydown',e=>{
- if(e.key==='Enter'){
-  const q=e.target.value.toLowerCase();
-  const match=[...document.querySelectorAll('.navbtn')].find(b=>b.textContent.toLowerCase().includes(q));
-  if(match)showPage(match.dataset.page);else toast('No matching tool found.');
- }
+(function(){
+const titles={dashboard:'Dashboard',earnings:'Creator Earnings',analytics:'Analytics',tools:'AI Tools',videos:'My Videos',settings:'Settings'};
+const navs=document.querySelectorAll('.nav');
+const pages=document.querySelectorAll('.page');
+navs.forEach(function(btn){
+ btn.addEventListener('click',function(){
+  const id=btn.dataset.page;
+  pages.forEach(p=>p.classList.toggle('active',p.id===id));
+  navs.forEach(n=>n.classList.toggle('active',n===btn));
+  document.getElementById('title').textContent=titles[id]||'Dashboard';
+  if(id==='analytics')drawChart('viewsChart',7,51000);
+ });
 });
-$('creatorName').value=read('creatorName','');
-updateStats();renderPlans();renderVideoHistory();drawThumb();
-setTimeout(()=>{$('loader').style.opacity='0';setTimeout(()=>{$('loader').style.display='none';$('app').style.display='block'},500)},1100);
+function drawChart(id,count,max){
+ const canvas=document.getElementById(id);
+ if(!canvas||!canvas.getContext)return;
+ const ctx=canvas.getContext('2d');
+ const rect=canvas.getBoundingClientRect();
+ const w=Math.max(rect.width,280);
+ const h=canvas.clientHeight||240;
+ const dpr=window.devicePixelRatio||1;
+ canvas.width=w*dpr;canvas.height=h*dpr;
+ ctx.scale(dpr,dpr);
+ const pad={l:42,r:12,t:20,b:30};
+ const values=Array.from({length:count},(_,i)=>max*(.2+.8*i/(count-1))*(.75+Math.random()*.25));
+ const high=Math.max(...values)*1.15;
+ const x=i=>pad.l+i*(w-pad.l-pad.r)/(count-1);
+ const y=v=>h-pad.b-v/high*(h-pad.t-pad.b);
+ ctx.font='10px Arial';
+ ctx.strokeStyle='#302a40';ctx.fillStyle='#9991aa';ctx.lineWidth=1;
+ for(let j=0;j<=4;j++){
+  const yy=pad.t+j*(h-pad.t-pad.b)/4;
+  ctx.beginPath();ctx.moveTo(pad.l,yy);ctx.lineTo(w-pad.r,yy);ctx.stroke();
+ }
+ ctx.beginPath();
+ values.forEach((v,i)=>i?ctx.lineTo(x(i),y(v)):ctx.moveTo(x(i),y(v)));
+ ctx.strokeStyle='#a17aff';ctx.lineWidth=3;ctx.stroke();
+ ctx.lineTo(x(count-1),h-pad.b);ctx.lineTo(x(0),h-pad.b);ctx.closePath();
+ ctx.fillStyle='rgba(145,100,255,.13)';ctx.fill();
+ values.forEach((v,i)=>{
+  ctx.beginPath();ctx.arc(x(i),y(v),3,0,Math.PI*2);
+  ctx.fillStyle='#b49aff';ctx.fill();
+ });
+}
+function updateMoney(value){
+ const formatted=new Intl.NumberFormat('en-US',{style:'currency',currency:'EUR'}).format(value);
+ document.querySelectorAll('.money').forEach(el=>el.textContent=formatted);
+}
+document.getElementById('period').addEventListener('change',function(){
+ const v=this.value;
+ drawChart('revenueChart',v==='7'?7:v==='12'?12:30,v==='12'?900:300);
+});
+document.getElementById('generate').addEventListener('click',function(){
+ const idea=document.getElementById('idea').value.trim();
+ const result=document.getElementById('result');
+ if(!idea){result.textContent='Please enter an idea first.';return;}
+ result.textContent='HOOK\n'+idea+'\n\nINTRO\nToday, we explore something surprising.\n\nMAIN POINTS\n1. Explain the first key idea.\n2. Give an interesting example.\n3. Finish with a useful takeaway.\n\nENDING\nWhat do you think? Follow for more!\n\nDEMO TEMPLATE — no AI service connected.';
+});
+document.getElementById('save').addEventListener('click',function(){
+ updateMoney(Number(document.getElementById('amount').value));
+ const name=document.getElementById('creator').value.trim();
+ document.getElementById('avatar').textContent=(name[0]||'A').toUpperCase();
+ alert('Demo settings saved.');
+});
+function initialCharts(){
+ drawChart('revenueChart',30,300);
+}
+initialCharts();
+window.addEventListener('resize',function(){
+ const active=document.querySelector('.page.active');
+ if(active&&active.id==='dashboard')drawChart('revenueChart',30,300);
+ if(active&&active.id==='analytics')drawChart('viewsChart',7,51000);
+});
+})();
 </script>
 </body>
 </html>
